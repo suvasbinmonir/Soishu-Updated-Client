@@ -1,0 +1,21 @@
+body {
+  /* font-family: 'Nunito', sans-serif; */
+  /* font-family: 'Josefin Sans', sans-serif; */
+  /* font-family: 'Raleway', sans-serif; */
+  font-family: 'Inter', sans-serif;
+}
+.titlefont {
+  font-family: 'Playfair Display', serif;
+}
+.swiper-pagination {
+  display: none;
+}
+
+@import 'tailwindcss';
+
+.react-tabs__tab--selected {
+  background-color: #b2672a !important;
+  color: white !important ;
+  /* border-bottom: 2px rgb(173, 41, 41) solid !important; */
+  border-radius: 8px !important;
+}

@@ -1,0 +1,124 @@
+[
+  {
+    "_id": 100001,
+    "name": "Nogor Sandal",
+    "title": "Bold Look, Built for Comfort",
+    "category": "Sandal",
+    "description": "Durable urban boots designed for comfort and daily wear.",
+    "price": 1750,
+    "depend": "new",
+    "discount": 21.71,
+    "product": [
+      { "id": 1, "image": "/1.jpg" },
+      { "id": 2, "image": "/2.jpg" },
+      { "id": 3, "image": "/3.jpg" },
+      { "id": 4, "image": "/4.jpg" },
+      { "id": 5, "image": "/5.jpg" }
+    ],
+
+    "colors": [
+      { "name": "Black", "image": "/derby.png" },
+      { "name": "master", "image": "/derby.png" },
+      { "name": "green", "image": "/derby.png" }
+    ]
+  },
+  {
+    "_id": 100002,
+    "name": "Classic Loafer",
+    "category": "Sacchi",
+    "title": "Refined Style Meets Daily Comfort",
+    "description": "Perfect for smart casual looks with timeless elegance.",
+    "price": 1850,
+    "discount": 23.5,
+    "stock": "in",
+    "colors": [
+      { "name": "Navy", "image": "/derby.png" },
+      { "name": "master", "image": "/derby.png" },
+      { "name": "green", "image": "/derby.png" }
+    ]
+  },
+  {
+    "_id": 100003,
+    "name": "Derby Prime",
+    "title": "Elegance For Every Occasion",
+    "description": "Premium leather derbies crafted for versatility and style.",
+    "price": 2250,
+    "category": "Casual",
+    "colors": [
+      { "name": "Brown", "image": "/derby.png" },
+      { "name": "master", "image": "/derby.png" },
+      { "name": "green", "image": "/derby.png" }
+    ]
+  },
+  {
+    "_id": 100004,
+    "name": "Sleek Monk",
+    "category": "Sacchi",
+
+    "title": "Sharp Looks, Smooth Finish",
+    "description": "Single strap monk shoe with a clean silhouette.",
+    "price": 1980,
+    "depend": "new",
+    "colors": [
+      { "name": "Black", "image": "/derby.png" },
+      { "name": "master", "image": "/derby.png" },
+      { "name": "green", "image": "/derby.png" }
+    ]
+  },
+  {
+    "_id": 100005,
+    "name": "Modern Brogue",
+    "category": "Sacchi",
+
+    "title": "Classic Details With Modern Fit",
+    "description": "Leather brogues updated for modern style enthusiasts.",
+    "price": 1600,
+    "colors": [
+      { "name": "Chestnut", "image": "/derby.png" },
+      { "name": "master", "image": "/derby.png" },
+      { "name": "green", "image": "/derby.png" }
+    ]
+  },
+  {
+    "_id": 100006,
+    "name": "Cholty Sandal",
+    "title": "Relaxed Fit With Leather Grace",
+    "description": "Comfortable moccasins with breathable leather finish.",
+    "price": 1400,
+    "category": "Sandal",
+    "depend": "new",
+    "colors": [
+      { "name": "Blue", "image": "/derby.png" },
+      { "name": "master", "image": "/derby.png" },
+      { "name": "green", "image": "/derby.png" }
+    ]
+  },
+  {
+    "_id": 100007,
+    "name": "Kadom Sandal",
+    "category": "Sandal",
+    "title": "Smart Footwear, Effortless Grace",
+    "description": "A perfect companion for office and formal events.",
+    "price": 2000,
+    "discount": 10,
+    "colors": [
+      { "name": "Black", "image": "/derby.png" },
+      { "name": "master", "image": "/derby.png" },
+      { "name": "green", "image": "/derby.png" }
+    ]
+  },
+  {
+    "_id": 100008,
+    "name": "Elite Slipon",
+    "title": "Minimal Look With Maximum Style",
+    "category": "Casual",
+
+    "description": "Easy to wear and great with jeans or chinos.",
+    "price": 1300,
+    "colors": [
+      { "name": "Beige", "image": "/derby.png" },
+      { "name": "master", "image": "/derby.png" },
+      { "name": "green", "image": "/derby.png" }
+    ]
+  }
+]
