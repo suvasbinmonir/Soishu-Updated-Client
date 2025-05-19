@@ -2,15 +2,22 @@ import { useState } from 'react';
 import { BsCart2 } from 'react-icons/bs';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import { IoCall, IoSearchOutline } from 'react-icons/io5';
-import { HiMenu, HiX } from 'react-icons/hi';
+import { HiX } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
+import { selectCartTotalQty } from '../../cartSlice';
+// import { selectCartTotalQty } from '../store/selectors'; // We'll define this selector next
 
 export const Nav = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // Use Redux selector to get total cart quantity
+  const cartCount = useSelector(selectCartTotalQty);
+
   return (
     <div className="bg-[#F6F0E6] sticky top-0 z-40 select-none">
-      <div className=" max-w-[1400px] mx-auto w-full ">
+      <div className="max-w-[1400px] mx-auto w-full">
         <nav className="h-24 flex items-center justify-between px-4 md:px-0 lg:mx-0 relative z-50">
           <div className="md:order-2 lg:order-1">
             <Link to="/">
@@ -65,9 +72,14 @@ export const Nav = () => {
             </Link>
             <Link
               to="/cart"
-              className="text-black text-2xl hover:text-[#9E6747]"
+              className="relative text-black text-2xl hover:text-[#9E6747]"
             >
               <BsCart2 />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#9E6747] rounded-full text-xs text-white px-1.5 py-0.5 font-semibold">
+                  {cartCount}
+                </span>
+              )}
             </Link>
             <Link
               to="/wishlist"
@@ -128,8 +140,17 @@ export const Nav = () => {
               <Link to="/search" onClick={() => setMobileMenuOpen(false)}>
                 <IoSearchOutline />
               </Link>
-              <Link to="/cart" onClick={() => setMobileMenuOpen(false)}>
+              <Link
+                to="/cart"
+                onClick={() => setMobileMenuOpen(false)}
+                className="relative"
+              >
                 <BsCart2 />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#9E6747] rounded-full text-xs text-white px-1.5 py-0.5 font-semibold">
+                    {cartCount}
+                  </span>
+                )}
               </Link>
               <Link to="/wishlist" onClick={() => setMobileMenuOpen(false)}>
                 <IoMdHeartEmpty />

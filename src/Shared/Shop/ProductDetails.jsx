@@ -1,7 +1,39 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactImageMagnify from 'react-image-magnify';
-import bg from './images/shop-bg.png';
+import bg from './images/shop-bg.png'; // untouched
+
+/* helpers for localStorage with TTL */
+const CART_KEY = 'cart_items';
+
+function loadCart() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(CART_KEY)) ?? [];
+    const now = Date.now();
+    const valid = raw.filter((i) => i.expires > now); // strip expired
+    if (valid.length !== raw.length) {
+      localStorage.setItem(CART_KEY, JSON.stringify(valid));
+    }
+    return valid;
+  } catch {
+    return [];
+  }
+}
+
+function saveToCart(item) {
+  const stored = loadCart();
+  const fifteenDays = 15 * 24 * 60 * 60 * 1000;
+  const newItem = { ...item, expires: Date.now() + fifteenDays };
+
+  const idx = stored.findIndex((i) => i._id === item._id);
+  if (idx > -1) {
+    stored[idx] = newItem; // overwrite existing
+  } else {
+    stored.push(newItem); // add new
+  }
+
+  localStorage.setItem(CART_KEY, JSON.stringify(stored));
+}
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -11,7 +43,7 @@ const ProductDetails = () => {
   const [activeSize, setActiveSize] = useState(null);
   const [qty, setQty] = useState(1);
 
-  /* fetch once */
+  /* fetch product once */
   useEffect(() => {
     fetch('/products.json')
       .then((r) => r.json())
@@ -26,7 +58,7 @@ const ProductDetails = () => {
 
   if (!product) return <div className="p-20 text-center">Loading…</div>;
 
-  /* helpers */
+  /* pricing helpers */
   const hasDiscount = product.discount > 0;
   const sale = hasDiscount
     ? (product.price * (1 - product.discount / 100)).toFixed(0)
@@ -43,101 +75,92 @@ const ProductDetails = () => {
     setActiveImg(c.image);
   };
 
+  /* ADD TO CART ⇒ store / update for 15 days with price */
+  const handleAddToCart = () => {
+    saveToCart({
+      _id: product._id,
+      price: Number(sale), // number, easier for math later
+      qty,
+      color: activeColor,
+      size: activeSize,
+      image: activeImg,
+      name: product.name,
+      title: product.title,
+    });
+  };
+
   return (
     <div className="bg-[#FAF8F2] min-h-screen">
-      {/* hero banner */}
-      <div
-        className="relative h-[400px] lg:h-[500px] flex items-center justify-center bg-cover bg-center"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)), url(${bg})`,
-        }}
-      >
-        <h1 className="text-4xl lg:text-5xl font-bold text-white drop-shadow-md">
-          {product.name}
-        </h1>
-      </div>
-
       {/* main */}
       <div className="max-w-[1400px] mx-auto px-4 lg:flex gap-20 py-12 mt-20">
         {/* LEFT column */}
         <div className="lg:w-1/2 flex gap-4">
           {/* thumbnails */}
-          <div className="flex lg:flex-col gap-6 h-[600px]">
+          <div className="flex lg:flex-col gap-6 ">
             {thumbs.map(({ image }, i) => (
               <button
                 key={i}
                 onClick={() => setActiveImg(image)}
-                className={`border-2 overflow-hidden w-20 h-20 lg:w-36 lg:h-36 bg-[#f0ecec]
-                  ${
-                    activeImg === image
-                      ? 'border-[#9E6747]'
-                      : 'border-transparent'
-                  }`}
+                className={`border-2 overflow-hidden w-20 h-20 lg:w-36 lg:h-36 bg-[#f0ecec] ${
+                  activeImg === image
+                    ? 'border-[#9E6747]'
+                    : 'border-transparent'
+                }`}
               >
                 <img
                   src={image}
                   alt=""
-                  className="object-cover  w-full h-full"
+                  className="object-cover w-full h-full"
                 />
               </button>
             ))}
           </div>
 
-          {/* Main image + zoom pane to the RIGHT */}
+          {/* Main image with zoom */}
           <div className="flex-1 flex items-center">
-            <div className="h-[600px] object-contain border bg-[#f0ecec] w-full">
-              {' '}
-              {/* fixed tall wrapper */}
-              <ReactImageMagnify
-                {...{
-                  smallImage: {
-                    alt: product.name,
-                    isFluidWidth: true,
-                    src: activeImg,
-                    // sizes: '(max-width: 768px) 100vw, 50vw', // optional responsive hint
-                  },
-                  largeImage: {
-                    src: activeImg,
-                    width: 1200, // ← REAL pixel width
-                    height: 1000, // ← REAL pixel height
-                  },
-                  enlargedImagePosition: 'beside',
-                  enlargedImageContainerDimensions: {
-                    width: '120%', // zoom pane width beside small image
-                    height: '100%', // same 600 px height
-                  },
-                  enlargedImageContainerStyle: {
-                    background: '#fff',
-                    boxShadow: '0 0 8px rgba(0,0,0,.15)',
-                  },
-                  lensStyle: { background: 'rgba(255,255,255,.3)' },
-                  // imageClassName: '', // small img fit
-                }}
-              />
-            </div>
+            <ReactImageMagnify
+              {...{
+                smallImage: {
+                  alt: product.name,
+                  isFluidWidth: true,
+                  src: activeImg,
+                },
+                largeImage: {
+                  src: activeImg,
+                  width: 1200,
+                  height: 1000,
+                },
+                enlargedImagePosition: 'beside',
+                enlargedImageContainerDimensions: {
+                  width: '120%',
+                  height: '100%',
+                },
+                enlargedImageContainerStyle: {
+                  background: '#fff',
+                  boxShadow: '0 0 8px rgba(0,0,0,.15)',
+                },
+                lensStyle: { background: 'rgba(255,255,255,.3)' },
+              }}
+            />
           </div>
         </div>
 
         {/* RIGHT column */}
         <div className="lg:w-1/2 mt-10 lg:mt-0">
-          <h2 className="text-lg uppercase">{product.name}</h2>
-          <p className="text-3xl font-semibold pt-2 ">{product.title}</p>
+          <h2 className="text-2xl uppercase">{product.name}</h2>
+          <p className="text-3xl font-semibold pt-2">{product.title}</p>
 
-          {/* price */}
-          <p className="text-2xl font-semibold mb-6 mt-4 border-b pb-4">
-            <span className="text-[#9E6747]">Tk.</span> {sale}
+          <div className="flex items-center gap-3 pt-5 pb-2 border-b mb-5">
+            <p className="text-2xl font-bold text-[#B2672A]">Tk. {sale}</p>
             {hasDiscount && (
               <>
-                {/* <span className="text-gray-300 line-through ml-3 text-lg font-normal">
+                <p className="text-sm line-through text-gray-400">
                   Tk. {product.price}
-                </span> */}
-                <span className="text-gray-500 line-through ml-3 text-lg font-normal">
-                  Tk. {save}
-                </span>{' '}
-                <span className="text-black text-lg pl-1">You save:</span>{' '}
+                </p>
+                <p className="text-sm text-green-600">Save Tk. {save}</p>
               </>
             )}
-          </p>
+          </div>
 
           {/* stock */}
           <p
@@ -155,12 +178,9 @@ const ProductDetails = () => {
               <button
                 key={c.name}
                 onClick={() => changeColor(c)}
-                className={`w-12 h-12 rounded-full overflow-hidden ring-2
-                  ${
-                    activeColor === c.name
-                      ? 'ring-[#9E6747]'
-                      : 'ring-transparent'
-                  }`}
+                className={`w-12 h-12 rounded-full overflow-hidden ring-2 ${
+                  activeColor === c.name ? 'ring-[#9E6747]' : 'ring-transparent'
+                }`}
                 title={c.name}
               >
                 <img
@@ -175,16 +195,15 @@ const ProductDetails = () => {
           {/* size picker */}
           <h3 className="font-semibold mb-2">Select size:</h3>
           <div className="flex flex-wrap gap-3 mb-6">
-            {[37, 38, 39, 41, 42, 43].map((sz) => (
+            {[39, 41, 42, 43].map((sz) => (
               <button
                 key={sz}
                 onClick={() => setActiveSize(sz)}
-                className={`w-12 h-12 flex items-center justify-center border 
-                  ${
-                    activeSize === sz
-                      ? ' text-black border-[#9E6747]'
-                      : 'border-gray-300'
-                  }`}
+                className={`w-12 h-12 flex items-center justify-center border ${
+                  activeSize === sz
+                    ? 'text-black border-[#9E6747]'
+                    : 'border-gray-300'
+                }`}
               >
                 {sz}
               </button>
@@ -204,18 +223,18 @@ const ProductDetails = () => {
               <span className="min-w-[2ch] px-3 text-center">{qty}</span>
               <button
                 onClick={() => setQty((q) => Math.min(10, q + 1))}
-                className="w-9 h-9 border-l  flex items-center justify-center cursor-pointer"
+                className="w-9 h-9 border-l flex items-center justify-center cursor-pointer"
               >
                 +
               </button>
             </div>
           </div>
 
-          <div className=" flex justify-between gap-14">
+          <div className="flex justify-between gap-14">
             <div className="w-[50%]">
               <button
-                // disabled={product.stock !== 'in' || !activeSize}
-                className="px-12 py-3 w-full bg-green-900 text-white text-2xl disabled:opacity-40 "
+                onClick={handleAddToCart}
+                className="px-12 py-3 w-full bg-green-900 text-white text-2xl"
               >
                 Checkout
               </button>

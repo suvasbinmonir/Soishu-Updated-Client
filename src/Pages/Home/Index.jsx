@@ -1,4 +1,5 @@
 import { Shop } from '../../Shared/Shop/Shop';
+import { FaqSection } from '../FAQ/FaqSection';
 import { VideoSection } from '../VideoSection/VideoSection';
 import { Banner } from './Banner';
 import { DontMiss } from './pages/DontMiss/DontMiss';
@@ -14,6 +15,7 @@ export const Index = () => {
       <Shipping />
       {/* <New /> */}
       {/* <Shop /> */}
+      <FaqSection />
       <VideoSection />
       {/* <DontMiss /> */}
     </div>

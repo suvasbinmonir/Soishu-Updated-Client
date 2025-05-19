@@ -1,5 +1,7 @@
-/* Offer.jsx */
+/*  src/pages/Offer.jsx  */
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
@@ -9,6 +11,13 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
+import {
+  addItem,
+  selectCartItem,
+  setDirectPurchase,
+} from '../../../../cartSlice';
+
+// import { addItem, selectCartItem, setDirectPurchase } from '@/store/cartSlice';
 
 /* ───────── constants ───────── */
 const TAB_ORDER = ['Sandal', 'Sacchi', 'Casual'];
@@ -18,26 +27,22 @@ const COLORS = [
 ];
 const SIZES = [39, 41, 42, 43];
 
-/* ───────── helper utils ───────── */
-const readCart = () => JSON.parse(localStorage.getItem('cart') || '[]');
-
-const writeCart = (newCart) =>
-  localStorage.setItem('cart', JSON.stringify(newCart));
-
 /* ───────────────── component ───────────────── */
 export const Offer = () => {
-  const swiperRef = useRef(null);
   const [products, setProducts] = useState([]);
+  const swiperRef = useRef(null);
 
+  /* load the mock products once */
   useEffect(() => {
     fetch('/products.json')
       .then((r) => r.json())
       .then(setProducts)
-      .catch((err) => console.error('products.json load error →', err));
+      .catch((e) => console.error('products.json load error →', e));
   }, []);
 
   if (!products.length) return null;
 
+  /* group products per tab heading */
   const grouped = TAB_ORDER.map((name) => ({
     name,
     items: products.filter(
@@ -47,10 +52,10 @@ export const Offer = () => {
 
   return (
     <div className="select-none mb-20 md:mb-32">
-      <div className="max-w-[1400px] mx-auto h-full">
+      <div className="max-w-[1400px] mx-auto">
         <Tabs>
-          {/* Tabs */}
-          <TabList className="flex gap-5 md:gap-5 justify-center md:justify-normal w-fit mx-auto ">
+          {/* ─── tab headers ─── */}
+          <TabList className="flex gap-5 justify-center md:justify-normal w-fit mx-auto">
             {grouped.map(({ name }) => (
               <Tab
                 key={name}
@@ -63,14 +68,14 @@ export const Offer = () => {
             ))}
           </TabList>
 
-          {/* Panels */}
+          {/* ─── tab bodies ─── */}
           {grouped.map(({ name, items }) => (
             <TabPanel key={name}>
               <Swiper
                 onSwiper={(sw) => (swiperRef.current = sw)}
                 spaceBetween={30}
-                freeMode
                 loop
+                freeMode
                 autoplay={{ delay: 3000, disableOnInteraction: false }}
                 pagination={{ clickable: true }}
                 breakpoints={{
@@ -103,9 +108,16 @@ const ProductCard = ({ prod }) => {
   const [colour, setColour] = useState(null);
   const [size, setSize] = useState(null);
   const [warn, setWarn] = useState('');
-  const [bump, setBump] = useState(0); // used only to re-render
 
-  /* pick correct image */
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  /* already-in-cart? */
+  const variantInCart = useSelector((state) =>
+    selectCartItem(state, prod._id, colour?.name, size)
+  );
+
+  /* choose correct image */
   const img =
     (colour && prod.product?.[colour.imgIdx]?.image) ||
     prod.product?.[0]?.image ||
@@ -113,62 +125,60 @@ const ProductCard = ({ prod }) => {
     '';
 
   /* price helpers */
-  const hasDiscount = prod.discount && prod.discount > 0;
+  const hasDiscount = prod.discount > 0;
   const sale = hasDiscount
     ? (prod.price * (1 - prod.discount / 100)).toFixed(0)
     : prod.price;
   const save = hasDiscount ? (prod.price - sale).toFixed(0) : 0;
 
-  /* check if this exact variant is already in cart */
-  const inCart = () => {
-    const cart = readCart();
-    return cart.some(
-      (it) =>
-        it._id === prod._id && it.colour === colour?.name && it.size === size
-    );
-  };
+  /* build the variant object once validation passes */
+  const buildVariant = () => ({
+    _id: prod._id,
+    name: prod.name,
+    price: Number(sale),
+    colour: colour.name,
+    size,
+    image: img,
+  });
 
-  /* add-to-cart */
+  /* add to cart only */
   const handleAdd = () => {
     if (!colour) return setWarn('Please choose a colour');
     if (!size) return setWarn('Please choose a size');
 
-    const cart = readCart();
-    const idx = cart.findIndex(
-      (it) =>
-        it._id === prod._id && it.colour === colour.name && it.size === size
-    );
-
-    if (idx > -1) {
-      cart[idx].qty += 1; // already there, bump qty
-    } else {
-      cart.push({
-        _id: prod._id,
-        name: prod.name,
-        colour: colour.name,
-        size,
-        qty: 1,
-      });
-    }
-    writeCart(cart);
+    dispatch(addItem(buildVariant()));
     setWarn('');
-    setBump((b) => b + 1); // force re-render to update button text
   };
+
+  /* “buy now” → directPurchase + navigate */
+  const handleBuyNow = () => {
+    if (!colour) return setWarn('Please choose a colour');
+    if (!size) return setWarn('Please choose a size');
+
+    dispatch(setDirectPurchase(buildVariant()));
+    setWarn('');
+    navigate('/checkout');
+  };
+
+  const slug = `soishu-${prod.name.toLowerCase().replace(/\s+/g, '-')}`;
 
   return (
     <div className="bg-white rounded-2xl p-6 flex flex-col gap-6">
-      {/* image */}
-      <div className="text-center bg-[#F6F0E6] rounded-2xl">
-        <img
-          src={img}
-          alt={prod.name}
-          className="w-[400px] h-[300px] object-contain mx-auto"
-        />
-      </div>
-
-      {/* name + colours */}
+      <Link to={`/product-details/${prod._id}/${slug}`}>
+        <div className="text-center bg-[#F6F0E6] rounded-2xl">
+          <img
+            src={img}
+            alt={prod.name}
+            className="w-[400px] h-[300px] object-contain mx-auto"
+          />
+        </div>
+      </Link>
+      {/* title & colour picker */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">{prod.name}</h1>
+        <Link to={`/product-details/${prod._id}/${slug}`}>
+          <h1 className="text-2xl font-semibold">{prod.name}</h1>
+        </Link>
+
         <div className="flex gap-2">
           {COLORS.map((c) => (
             <button
@@ -195,12 +205,9 @@ const ProductCard = ({ prod }) => {
           ))}
         </div>
       </div>
-
-      {/* description */}
       <p className="text-gray-600 text-sm leading-relaxed w-[60%] -mt-4">
         {prod.description}
       </p>
-
       {/* price */}
       <div className="flex items-center gap-3">
         <p className="text-2xl font-bold text-[#B2672A]">Tk. {sale}</p>
@@ -213,7 +220,6 @@ const ProductCard = ({ prod }) => {
           </>
         )}
       </div>
-
       {/* size picker */}
       <div className="flex flex-wrap gap-2">
         {SIZES.map((sz) => (
@@ -223,30 +229,46 @@ const ProductCard = ({ prod }) => {
               setSize(sz);
               setWarn('');
             }}
-            className={`w-10 h-10 border rounded-sm transition
-              ${
-                size === sz
-                  ? 'bg-[#B2672A] text-white border-[#B2672A]'
-                  : 'hover:bg-[#B2672A]/10'
-              }`}
+            className={`w-10 h-10 border rounded-sm transition ${
+              size === sz
+                ? 'bg-[#B2672A] text-white border-[#B2672A]'
+                : 'hover:bg-[#B2672A]/10'
+            }`}
           >
             {sz}
           </button>
         ))}
       </div>
-
-      {/* warn */}
+      {/* warnings */}
       {warn && <p className="text-red-600 text-xs -mb-3">{warn}</p>}
+      <div className="mt-auto flex flex-col sm:flex-row gap-2">
+        {variantInCart ? (
+          /* already in cart → show VIEW CART + BUY NOW */
+          <>
+            <Link
+              to="/cart"
+              className="flex-1 py-2 text-center bg-green-900 text-white rounded-md hover:bg-green-800"
+            >
+              View cart
+            </Link>
 
-      {/* add / make purchase */}
-      <button
-        onClick={handleAdd}
-        className={`mt-auto w-full py-2 bg-[#B2672A] text-white rounded-md ${
-          inCart() ? 'bg-green-900' : 'bg-[#B2672A]'
-        }`}
-      >
-        {inCart() ? 'Checkout' : 'Add to cart'}
-      </button>
+            <button
+              onClick={handleBuyNow}
+              className="flex-1 py-2 text-white rounded-md bg-emerald-600 hover:bg-emerald-700"
+            >
+              Buy&nbsp;now
+            </button>
+          </>
+        ) : (
+          /* not yet in cart → single ADD button */
+          <button
+            onClick={handleAdd}
+            className="w-full py-2 text-white rounded-md bg-[#B2672A] hover:bg-[#9E5522]"
+          >
+            Add to cart
+          </button>
+        )}
+      </div>
     </div>
   );
 };
