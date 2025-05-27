@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import ScrollToTop from '../../Shared/ScrollToTop/ScrollToTop';
 
 const faqs = [
   {
@@ -63,7 +64,8 @@ export const FaqSection = () => {
 
   return (
     <div>
-      <div className="max-w-[1440px] px-5 mx-auto mb-16">
+      <div className="max-w-[1440px] mx-auto lg:px-16 md:px-10 px-5 my-16">
+        <ScrollToTop />
         <div className="flex justify-center items-center flex-col mb-16">
           <p className="uppercase bg-[#ecdbcd] text-[#b26729] w-fit text-center px-2.5 py-0.5 text-sm rounded-full mb-3 md:mb-6">
             Frequently ask questions

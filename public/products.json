@@ -1,5 +1,50 @@
 [
   {
+    "_id": 100007,
+    "name": "Kadom Sandal",
+    "category": "Sandal",
+    "title": "Smart Footwear, Effortless Grace",
+    "description": "A perfect companion for office and formal events.",
+    "price": 1750,
+    "discount": 21.71,
+    "tan": [
+      {
+        "id": 1,
+        "image": "/sandal/kodom/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sandal/kodom/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sandal/kodom/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sandal/kodom/master/4.jpg"
+      }
+    ],
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "/sandal/kodom/chocklate/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sandal/kodom/chocklate/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sandal/kodom/chocklate/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sandal/kodom/chocklate/4.jpg"
+      }
+    ]
+  },
+  {
     "_id": 100001,
     "name": "Nogor Sandal",
     "title": "Bold Look, Built for Comfort",
@@ -8,75 +53,41 @@
     "price": 1750,
     "depend": "new",
     "discount": 21.71,
-    "product": [
-      { "id": 1, "image": "/1.jpg" },
-      { "id": 2, "image": "/2.jpg" },
-      { "id": 3, "image": "/3.jpg" },
-      { "id": 4, "image": "/4.jpg" },
-      { "id": 5, "image": "/5.jpg" }
+    "tan": [
+      {
+        "id": 1,
+        "image": "/sandal/nogor/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sandal/nogor/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sandal/nogor/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sandal/nogor/master/4.jpg"
+      }
     ],
-
-    "colors": [
-      { "name": "Black", "image": "/derby.png" },
-      { "name": "master", "image": "/derby.png" },
-      { "name": "green", "image": "/derby.png" }
-    ]
-  },
-  {
-    "_id": 100002,
-    "name": "Classic Loafer",
-    "category": "Sacchi",
-    "title": "Refined Style Meets Daily Comfort",
-    "description": "Designed for the journey. Built for all your everyday moves.",
-    "price": 1850,
-    "discount": 23.5,
-    "stock": "in",
-    "colors": [
-      { "name": "Navy", "image": "/derby.png" },
-      { "name": "master", "image": "/derby.png" },
-      { "name": "green", "image": "/derby.png" }
-    ]
-  },
-  {
-    "_id": 100003,
-    "name": "Derby Prime",
-    "title": "Elegance For Every Occasion",
-    "description": "Take every step with confidence. Kadom is made for wherever you go.",
-    "price": 2250,
-    "category": "Casual",
-    "colors": [
-      { "name": "Brown", "image": "/derby.png" },
-      { "name": "master", "image": "/derby.png" },
-      { "name": "green", "image": "/derby.png" }
-    ]
-  },
-  {
-    "_id": 100004,
-    "name": "Sleek Monk",
-    "category": "Sacchi",
-
-    "title": "Sharp Looks, Smooth Finish",
-    "description": "Single strap monk shoe with a clean silhouette.",
-    "price": 1980,
-    "depend": "new",
-    "colors": [
-      { "name": "Black", "image": "/derby.png" },
-      { "name": "master", "image": "/derby.png" },
-      { "name": "green", "image": "/derby.png" }
-    ]
-  },
-  {
-    "_id": 100005,
-    "name": "Modern Brogue",
-    "category": "Sacchi",
-
-    "title": "Classic Details With Modern Fit",
-    "description": "Leather brogues updated for modern style enthusiasts.",
-    "price": 1600,
-    "colors": [
-      { "name": "Chestnut", "image": "/derby.png" },
-      { "name": "master", "image": "/derby.png" },
-      { "name": "green", "image": "/derby.png" }
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "/sandal/nogor/chocklate/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sandal/nogor/chocklate/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sandal/nogor/chocklate/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sandal/nogor/chocklate/4.jpg"
+      }
     ]
   },
   {
@@ -84,41 +95,353 @@
     "name": "Cholty Sandal",
     "title": "Relaxed Fit With Leather Grace",
     "description": "Comfortable moccasins with breathable leather finish.",
-    "price": 1400,
+    "price": 1750,
+    "discount": 21.71,
     "category": "Sandal",
     "depend": "new",
-    "colors": [
-      { "name": "Blue", "image": "/derby.png" },
-      { "name": "master", "image": "/derby.png" },
-      { "name": "green", "image": "/derby.png" }
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "/sandal/cholty/chocklate/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sandal/cholty/chocklate/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sandal/cholty/chocklate/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sandal/cholty/chocklate/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/sandal/cholty/chocklate/5.jpg"
+      }
+    ],
+    "tan": [
+      {
+        "id": 1,
+        "image": "/sandal/cholty/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sandal/cholty/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sandal/cholty/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sandal/cholty/master/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/sandal/cholty/master/5.jpg"
+      }
     ]
   },
   {
-    "_id": 100007,
-    "name": "Kadom Sandal",
-    "category": "Sandal",
-    "title": "Smart Footwear, Effortless Grace",
-    "description": "A perfect companion for office and formal events.",
-    "price": 2000,
-    "discount": 10,
-    "colors": [
-      { "name": "Black", "image": "/derby.png" },
-      { "name": "master", "image": "/derby.png" },
-      { "name": "green", "image": "/derby.png" }
-    ]
-  },
-  {
-    "_id": 100008,
-    "name": "Elite Slipon",
-    "title": "Minimal Look With Maximum Style",
-    "category": "Casual",
+    "_id": 1000021,
+    "name": "Choron Casual",
+    "title": " Choron – Step Bold",
+    "description": " Walk with confidence, wherever you go.",
+    "price": 3499,
+    "discount": 41.41,
 
-    "description": "Easy to wear and great with jeans or chinos.",
-    "price": 1300,
-    "colors": [
-      { "name": "Beige", "image": "/derby.png" },
-      { "name": "master", "image": "/derby.png" },
-      { "name": "green", "image": "/derby.png" }
+    "category": "Casual",
+    "depend": "new",
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "/shoes/choron/chocklate/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/shoes/choron/chocklate/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/shoes/choron/chocklate/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/shoes/choron/chocklate/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/shoes/choron/chocklate/5.jpg"
+      }
+    ],
+    "tan": [
+      {
+        "id": 1,
+        "image": "/shoes/choron/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/shoes/choron/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/shoes/choron/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/shoes/choron/master/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/shoes/choron/master/5.jpg"
+      }
+    ]
+  },
+
+  {
+    "_id": 100002,
+    "name": "Poth Shoes",
+    "title": " Poth – Made to Mov",
+    "description": "Easy on your feet. Effortless in style.",
+    "price": 3499,
+    "discount": 41.41,
+
+    "category": "Casual",
+    "depend": "new",
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "/shoes/poth/chocklate/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/shoes/poth/chocklate/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/shoes/poth/chocklate/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/shoes/poth/chocklate/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/shoes/poth/chocklate/5.jpg"
+      }
+    ],
+    "tan": [
+      {
+        "id": 1,
+        "image": "/shoes/poth/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/shoes/poth/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/shoes/poth/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/shoes/poth/master/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/shoes/poth/master/5.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 100003,
+    "name": "Bokul Shoes",
+    "title": "Bokul – Light on Feet",
+    "description": "Easy on your feet. Effortless in style.",
+    "price": 4299,
+    "discount": 26.72,
+
+    "category": "Casual",
+    "depend": "new",
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "/shoes/bokul/chocklate/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/shoes/bokul/chocklate/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/shoes/bokul/chocklate/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/shoes/bokul/chocklate/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/shoes/bokul/chocklate/5.jpg"
+      }
+    ],
+    "tan": [
+      {
+        "id": 1,
+        "image": "/shoes/bokul/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/shoes/bokul/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/shoes/bokul/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/shoes/bokul/master/4.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 100004,
+    "name": "Trevo Sacchi",
+    "title": "TREVO – Move Free",
+    "description": "Light, clean, and made to roam.",
+    "price": 1450,
+    "discount": 31.72,
+    "category": "Sacchi",
+    "depend": "new",
+    "tan": [
+      {
+        "id": 1,
+        "image": "/sacchi/trevo/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sacchi/trevo/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sacchi/trevo/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sacchi/trevo/master/4.jpg"
+      }
+    ],
+    "black": [
+      {
+        "id": 1,
+        "image": "/sacchi/trevo/black/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sacchi/trevo/black/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sacchi/trevo/black/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sacchi/trevo/black/4.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 100005,
+    "name": "Wolvo Sacchi",
+    "title": "WOLVO – Power in Every Step",
+    "description": " Rugged comfort, built for the bold.",
+    "price": 1350,
+    "discount": 26.67,
+    "category": "Sacchi",
+    "depend": "new",
+    "tan": [
+      {
+        "id": 1,
+        "image": "/sacchi/wolvo/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sacchi/wolvo/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sacchi/wolvo/master/3.jpg"
+      }
+    ],
+    "black": [
+      {
+        "id": 1,
+        "image": "/sacchi/wolvo/black/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sacchi/wolvo/black/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sacchi/wolvo/black/3.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 100011,
+    "name": "Zakta Sacchi",
+    "title": "ZAKTA – Style in Motion",
+    "description": " Smart looks. Smooth walks.",
+    "price": 1750,
+    "discount": 22.86,
+    "category": "Sacchi",
+    "depend": "new",
+    "tan": [
+      {
+        "id": 1,
+        "image": "/sacchi/zakta/master/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sacchi/zakta/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sacchi/zakta/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sacchi/zakta/master/5.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/sacchi/zakta/master/6.jpg"
+      }
+    ],
+    "black": [
+      {
+        "id": 1,
+        "image": "/sacchi/zakta/black/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sacchi/zakta/black/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sacchi/zakta/black/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sacchi/zakta/black/5.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/sacchi/zakta/black/6.jpg"
+      }
     ]
   }
 ]

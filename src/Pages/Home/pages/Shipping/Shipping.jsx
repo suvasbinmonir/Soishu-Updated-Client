@@ -1,11 +1,13 @@
 import shop from './images/2.svg';
 import shipping from './images/1.svg';
 import pay from './images/3.svg';
+import ScrollToTop from '../../../../Shared/ScrollToTop/ScrollToTop';
 export const Shipping = () => {
   return (
-    <div className="max-w-[1400px] mx-auto">
-      <div className="flex flex-wrap justify-evenly items-center h-full space-y-10">
-        <div className="text-[#2f3133]">
+    <div className="max-w-[1440px] mx-auto lg:px-16 md:px-10 px-5">
+      <ScrollToTop />
+      <div className="flex flex-wrap justify-evenly items-center h-full  ">
+        <div className="text-[#2f3133] ">
           <img src={shipping} className="w-24 mx-auto" alt="" />
           <h1 className="text-lg uppercase font-semibold text-center">
             shipping & return
@@ -15,7 +17,7 @@ export const Shipping = () => {
           </h1>
         </div>
 
-        <div className="text-[#2f3133]">
+        <div className="text-[#2f3133] ">
           <img src={shop} className="w-24  mx-auto" alt="" />
           <h1 className="text-lg uppercase font-semibold text-center mt-3">
             SHOP WITH CONFIDENCE
@@ -25,8 +27,8 @@ export const Shipping = () => {
           </h1>
         </div>
 
-        <div className="text-[#2f3133]">
-          <img src={pay} className="w-20  mx-auto" alt="" />
+        <div className="text-[#2f3133] ">
+          <img src={pay} className="w-24  mx-auto" alt="" />
           <h1 className="text-lg uppercase font-semibold text-center mt-3">
             CASH ON DELIVERY
           </h1>
