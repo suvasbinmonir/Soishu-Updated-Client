@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { BsCart2 } from 'react-icons/bs';
-import { IoMdHeartEmpty } from 'react-icons/io';
-import { IoCall, IoSearchOutline } from 'react-icons/io5';
-import { HiX } from 'react-icons/hi';
+import { IoSearchOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { selectCartTotalQty } from '../../cartSlice';
 import ScrollToTop from '../ScrollToTop/ScrollToTop';
+import { CiLogin } from 'react-icons/ci';
+import { Menu, X } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 
 export const Nav = ({ onShopClick, onAboutClick, onContactClick }) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,15 +36,55 @@ export const Nav = ({ onShopClick, onAboutClick, onContactClick }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    let startY = 0;
+    let endY = 0;
+
+    const handleTouchStart = (e) => {
+      startY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e) => {
+      endY = e.touches[0].clientY;
+      const swipeDistance = startY - endY;
+
+      // If the user swipes up, prevent scrolling on the background
+      if (swipeDistance > 10) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = () => {
+      const swipeDistance = startY - endY;
+      if (swipeDistance > 50 && isMobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      window.addEventListener('touchstart', handleTouchStart, {
+        passive: false,
+      });
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+      window.addEventListener('touchend', handleTouchEnd, { passive: false });
+    }
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <div
-      className={`bg-[#F6F0E6] top-0 z-40 select-none fixed w-full transition-transform duration-300 ease-in-out ${
+      className={`bg-[#f7f7f7] top-0 z-40 select-none fixed w-full transition-transform duration-300 ease-in-out ${
         showNav ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
       <ScrollToTop />
-      <div className="max-w-[1440px] mx-auto lg:px-16 md:px-10 px-5 relative">
-        <nav className="h-24 flex items-center justify-between px-4 md:px-0 lg:mx-0 relative z-50">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-6 relative">
+        <nav className="md:h-24 h-16 flex items-center justify-between md:px-0 lg:mx-0 relative z-50">
           {/* Logo */}
           <div className="md:order-2 lg:order-1">
             <Link to="/">
@@ -60,25 +101,25 @@ export const Nav = ({ onShopClick, onAboutClick, onContactClick }) => {
             <Link
               to="/"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="text-black hover:text-[#9E6747] font-light"
+              className="text-[#212529] hover:text-[#099885] font-light"
             >
               Home
             </Link>
             <span
               onClick={onShopClick}
-              className="text-black hover:text-[#9E6747] font-light"
+              className="text-[#212529] hover:text-[#099885] font-light cursor-pointer"
             >
               Shop
             </span>
             <span
               onClick={onAboutClick}
-              className="text-black hover:text-[#9E6747] font-light"
+              className="text-[#212529] hover:text-[#099885] font-light cursor-pointer"
             >
               About Us
             </span>
             <span
               onClick={onContactClick}
-              className="text-black hover:text-[#9E6747] font-light"
+              className="text-[#212529] hover:text-[#099885] font-light cursor-pointer"
             >
               Contact
             </span>
@@ -88,44 +129,47 @@ export const Nav = ({ onShopClick, onAboutClick, onContactClick }) => {
           <div className="hidden md:order-1 lg:order-3 md:flex items-center gap-6 text-xl">
             <a
               href="tel:01805121001"
-              className="inline-flex items-center gap-2 rounded-md px-3 py-1 bg-[#B2672A] text-white hover:bg-[#9E5522]"
+              className="inline-flex items-center gap-2 rounded-md px-5 py-1 bg-[#099885] hover:bg-[#00846e] cursor-pointer text-white font-light"
             >
-              <IoCall />
+              <FaWhatsapp />
               01805121001
             </a>
             <Link
-              to="/search"
-              className="text-black text-2xl hover:text-[#9E6747]"
+              // to="/search"
+              className="text-[#212529] text-2xl hover:text-[#099885]"
             >
               <IoSearchOutline />
             </Link>
+
             <Link
               to="/cart"
-              className="relative text-black text-2xl hover:text-[#9E6747]"
+              className="relative text-[#212529] text-2xl hover:text-[#099885]"
             >
               <BsCart2 />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#9E6747] rounded-full text-xs text-white px-1.5 py-0.5 font-semibold">
+                <span className="absolute -top-2 -right-2 bg-[#099885] rounded-full text-xs text-white px-1.5 py-0.5 font-semibold">
                   {cartCount}
                 </span>
               )}
             </Link>
+            <Link
+              to="/login"
+              className="text-[#212529] text-2xl hover:text-[#099885]"
+            >
+              <CiLogin />
+            </Link>
             {/* <Link
               to="/wishlist"
-              className="text-black text-2xl hover:text-[#9E6747]"
+              className="text-[#212529] text-2xl hover:text-[#099885]"
             >
               <IoMdHeartEmpty />
             </Link> */}
           </div>
 
           {/* Mobile Hamburger */}
-          <div className="lg:hidden md:order-3 order-3 text-3xl">
+          <div className="lg:hidden md:order-3 order-3 text-3xl text-[#099885]">
             <button onClick={() => setMobileMenuOpen(true)}>
-              <div className="space-y-[8.5px]">
-                <div className="border-b border-black w-[40px]" />
-                <div className="border-b border-black w-[40px]" />
-                <div className="border-b border-black w-[40px]" />
-              </div>
+              <Menu size={28} />
             </button>
           </div>
         </nav>
@@ -138,19 +182,19 @@ export const Nav = ({ onShopClick, onAboutClick, onContactClick }) => {
         >
           {/* Close Button */}
           <button
-            className="absolute top-4 right-4 text-3xl"
+            className="absolute top-8 right-4 text-3xl text-[#099885]"
             onClick={() => setMobileMenuOpen(false)}
           >
-            <HiX />
+            <X size={28} />
           </button>
 
           {/* Logo Centered */}
           <div className="mt-8 flex justify-center">
-            <img src="/logo.svg" className="w-[140px]" alt="Logo" />
+            <img src="/logo.svg" className="w-[100px]" alt="Logo" />
           </div>
 
           {/* Mobile Links */}
-          <div className="flex flex-col items-center gap-6 text-lg  mt-12 uppercase">
+          <div className="flex flex-col items-center gap-6 text-lg mt-12 uppercase">
             <Link
               to="/"
               onClick={() => {
@@ -188,7 +232,7 @@ export const Nav = ({ onShopClick, onAboutClick, onContactClick }) => {
 
           {/* Mobile Icons */}
           <div className="flex justify-center gap-6 text-2xl mt-10">
-            <Link to="/search" onClick={() => setMobileMenuOpen(false)}>
+            <Link onClick={() => setMobileMenuOpen(false)}>
               <IoSearchOutline />
             </Link>
             <Link
@@ -198,21 +242,27 @@ export const Nav = ({ onShopClick, onAboutClick, onContactClick }) => {
             >
               <BsCart2 />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#9E6747] rounded-full text-xs text-white px-1.5 py-0.5 font-semibold">
+                <span className="absolute -top-2 -right-2 bg-[#099885] rounded-full text-xs text-white px-1.5 py-0.5 font-semibold">
                   {cartCount}
                 </span>
               )}
+            </Link>
+            <Link
+              to="/login"
+              className="text-[#212529] text-2xl hover:text-[#099885]"
+            >
+              <CiLogin />
             </Link>
             {/* <Link to="/wishlist" onClick={() => setMobileMenuOpen(false)}>
               <IoMdHeartEmpty />
             </Link> */}
           </div>
-          <div className="flex justify-center pt-5">
+          <div className="flex justify-center pt-9">
             <a
               href="tel:01805121001"
-              className="inline-flex items-center gap-2 rounded-md px-6 py-1 bg-[#B2672A] text-white hover:bg-[#9E5522]"
+              className="inline-flex w-[60%] justify-center items-center gap-2 text-lg rounded-md px-6 py-2 bg-[#B2672A] text-white hover:bg-[#9E5522]"
             >
-              <IoCall />
+              <FaWhatsapp />
               01805121001
             </a>
           </div>

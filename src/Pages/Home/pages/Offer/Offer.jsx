@@ -1,415 +1,157 @@
-// /*  src/pages/Offer.jsx  */
-// import { useEffect, useRef, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useNavigate, Link } from 'react-router-dom';
-// import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-// import { FaCheck } from 'react-icons/fa';
-
-// import {
-//   addItem,
-//   selectCartItem,
-//   setDirectPurchase,
-// } from '../../../../cartSlice';
-// import ScrollToTop from '../../../../Shared/ScrollToTop/ScrollToTop';
-
-// /* tabs + sizes stay global */
-// const TAB_ORDER = ['sandal', 'sacchi', 'casual'];
-// const SIZES = [39, 40, 41, 42, 43, 44];
-
-// export const Offer = () => {
-//   const [products, setProducts] = useState([]);
-
-//   /* fetch once */
-//   useEffect(() => {
-//     fetch('/products.json')
-//       .then((r) => r.json())
-//       .then(setProducts)
-//       .catch((e) => console.error('products.json load error →', e));
-//   }, []);
-
-//   if (!products.length) return null;
-
-//   const grouped = TAB_ORDER.map((name) => ({
-//     name,
-//     items: products.filter(
-//       (p) => p.category.toLowerCase() === name.toLowerCase()
-//     ),
-//   }));
-
-//   return (
-//     <div className="select-none mb-20 md:mb-32 ">
-//       <ScrollToTop />
-//       <div className="max-w-[1440px] mx-auto lg:px-16 md:px-10 px-5">
-//         <Tabs>
-//           <div className="sticky md:static top-0 z-10 bg-[#FAF8F2] py-4">
-//             <TabList className="flex gap-5 justify-center md:justify-normal w-fit mx-auto">
-//               {grouped.map(({ name }) => (
-//                 <Tab
-//                   key={name}
-//                   className="cursor-pointer px-2 md:px-4 py-1 md:py-2 border hover:bg-[#f7ecd9]
-//                              data-[selected]:bg-[#B2672A] data-[selected]:text-white
-//                              rounded outline-none data-[selected]:border-0 "
-//                 >
-//                   <h1 className="md:text-2xl text-lg md:font-bold">
-//                     {name.charAt(0).toUpperCase() + name.slice(1)}
-//                   </h1>
-//                 </Tab>
-//               ))}
-//             </TabList>
-//           </div>
-//           {/* ─── tabs ─── */}
-
-//           {/* ─── panels ─── */}
-//           {grouped.map(({ name, items }) => (
-//             <TabPanel key={name}>
-//               <div className="mySwiper mt-10 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-//                 {items.map((prod) => (
-//                   <div key={prod._id}>
-//                     <ProductCard prod={prod} />
-//                   </div>
-//                 ))}
-//               </div>
-//             </TabPanel>
-//           ))}
-//         </Tabs>
-//       </div>
-//     </div>
-//   );
-// };
-
-// /* ───────────────── single product card ───────────────── */
-// const ProductCard = ({ prod }) => {
-//   /* build swatch list dynamically from product fields */
-//   const swatches = [
-//     prod.tan?.length && {
-//       name: 'tan',
-//       hex: '#9D4304',
-//       key: 'tan',
-//     },
-//     prod.chocklate?.length && {
-//       name: 'chocklate',
-//       hex: '#4F2D1D',
-//       key: 'chocklate',
-//     },
-//     prod.black?.length && {
-//       name: 'black',
-//       hex: '#222',
-//       key: 'black',
-//     },
-//   ].filter(Boolean);
-
-//   /* colour, size, warning states */
-//   const [colourName, setColourName] = useState(swatches[0]?.name || '');
-//   const [size, setSize] = useState(null);
-//   const [warn, setWarn] = useState('');
-
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-
-//   const productKey = swatches.find((c) => c.name === colourName)?.key;
-
-//   /* check variant in cart */
-//   const variantInCart = useSelector((state) =>
-//     selectCartItem(state, prod._id, colourName, size)
-//   );
-
-//   /* choose image */
-//   const img =
-//     prod?.[productKey]?.[0]?.image ||
-//     prod?.[swatches[0]?.key]?.[0]?.image ||
-//     '';
-
-//   console.log(img);
-
-//   /* pricing */
-//   const hasDiscount = prod.discount > 0;
-//   const sale = hasDiscount
-//     ? (prod.price * (1 - prod.discount / 100)).toFixed(0)
-//     : prod.price;
-//   const save = hasDiscount ? (prod.price - sale).toFixed(0) : 0;
-
-//   /* build variant object once */
-//   const buildVariant = () => ({
-//     _id: prod._id,
-//     name: prod.name,
-//     price: Number(sale),
-//     colour: colourName,
-//     size,
-//     qty: 1,
-//     image: img,
-//   });
-
-//   /* handlers */
-//   const handleAdd = () => {
-//     if (!size) return setWarn('Please choose a size');
-//     dispatch(addItem(buildVariant()));
-//     setWarn('');
-//   };
-
-//   const handleBuyNow = () => {
-//     if (!size) return setWarn('Please choose a size');
-//     dispatch(setDirectPurchase(buildVariant()));
-//     setWarn('');
-//     navigate('/checkout');
-//   };
-
-//   const slug = `${prod.name.toLowerCase().replace(/\s+/g, '-')}`;
-
-//   /* ----- UI ----- */
-//   return (
-//     <div className="bg-[#F6F0E6] rounded-2xl p-6 flex flex-col gap-6">
-//       <Link to={`/products/${slug}`}>
-//         <div className="text-center  rounded-lg overflow-hidden">
-//           <img
-//             src={img}
-//             alt={prod.name}
-//             className="aspect-square object-contain  mx-auto "
-//           />
-//         </div>
-//       </Link>
-
-//       {/* title & colour picker */}
-//       <div className="flex items-center justify-between">
-//         <Link to={`/products/${slug}`}>
-//           <h1 className="text-2xl font-semibold">{prod.name}</h1>
-//         </Link>
-
-//         <div className="flex gap-2">
-//           {swatches.map(({ name, hex }) => (
-//             <button
-//               key={name}
-//               onClick={() => {
-//                 setColourName(name);
-//                 setWarn('');
-//               }}
-//               className="relative w-5 h-5 rounded-full border-2 cursor-pointer"
-//               style={{
-//                 backgroundColor: hex,
-//                 borderColor: colourName === name ? '#B2672A' : 'transparent',
-//               }}
-//               title={name}
-//             >
-//               {colourName === name && (
-//                 <FaCheck className="absolute inset-0 m-auto text-[8px] text-white" />
-//               )}
-//             </button>
-//           ))}
-//         </div>
-//       </div>
-
-//       <p className="text-gray-600 text-sm leading-relaxed w-[60%] -mt-4">
-//         {prod.description}
-//       </p>
-
-//       <div className="flex items-center gap-3">
-//         <p className="text-2xl font-bold text-[#B2672A]">Tk. {sale}</p>
-//         {hasDiscount && (
-//           <>
-//             <p className="text-sm line-through text-gray-400">
-//               Tk. {prod.price}
-//             </p>
-//             <p className="text-sm text-green-600">Save Tk. {save}</p>
-//           </>
-//         )}
-//       </div>
-
-//       {/* size picker */}
-//       <div className="flex flex-wrap gap-2">
-//         {SIZES.map((sz) => (
-//           <button
-//             key={sz}
-//             onClick={() => {
-//               setSize(sz);
-//               setWarn('');
-//             }}
-//             className={`w-10 h-10 border rounded-sm transition cursor-pointer ${
-//               size === sz
-//                 ? 'bg-[#B2672A] text-white border-[#B2672A]'
-//                 : 'hover:bg-[#B2672A]/10'
-//             }`}
-//           >
-//             {sz}
-//           </button>
-//         ))}
-//       </div>
-
-//       {warn && <p className="text-red-600 text-xs -mb-3">{warn}</p>}
-
-//       {/* actions */}
-//       <div className="mt-auto flex flex-col sm:flex-row gap-2">
-//         {variantInCart ? (
-//           <>
-//             <Link
-//               to="/cart"
-//               className="flex-1 py-2 text-center  rounded-md hover:bg-[#ece3d6] bg-[#F7F0E6] border-[0.5px] border-[#713601] text-[#713601] shadow-inner"
-//             >
-//               View cart
-//             </Link>
-//             <button
-//               onClick={handleBuyNow}
-//               className="flex-1 py-2  rounded-md hover:bg-[#713601]/90 cursor-pointer bg-[#713601] text-white"
-//             >
-//               Buy&nbsp;now
-//             </button>
-//           </>
-//         ) : (
-//           <button
-//             onClick={handleAdd}
-//             className="w-full py-2 text-white rounded-md bg-[#B2672A] hover:bg-[#9E5522] "
-//           >
-//             Add to cart
-//           </button>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Offer;
-
-/*  src/pages/Offer.jsx  */
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { FaCheck } from 'react-icons/fa';
 
+import { addItem, setDirectPurchase } from '../../../../cartSlice';
 import {
-  addItem,
-  selectCartItem,
-  setDirectPurchase,
-} from '../../../../cartSlice';
-import ScrollToTop from '../../../../Shared/ScrollToTop/ScrollToTop';
-
-/* tabs + sizes stay global */
-const TAB_ORDER = ['sandal', 'sacchi', 'casual'];
-const SIZES = [39, 40, 41, 42, 43, 44];
+  useGetAllProductsQuery,
+  useGetProductsByCategoryQuery,
+} from '../../../../api/productsApi';
+import { useGetAllCategoriesQuery } from '../../../../api/categoryApi';
 
 export const Offer = () => {
-  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const { data: categories = [] } = useGetAllCategoriesQuery();
 
-  /* fetch once */
-  useEffect(() => {
-    fetch('/products.json')
-      .then((r) => r.json())
-      .then(setProducts)
-      .catch((e) => console.error('products.json load error →', e));
-  }, []);
+  const categoryNames = categories.map((category) => category.name);
+  const TAB_ORDER = categoryNames ? ['All', ...categoryNames] : [];
 
-  if (!products.length) return null;
+  // Query all products
+  const { data: allProducts, isLoading: loadingAll } = useGetAllProductsQuery();
 
-  const grouped = TAB_ORDER.map((name) => ({
-    name,
-    items: products.filter(
-      (p) => p.category.toLowerCase() === name.toLowerCase()
-    ),
-  }));
+  // Query products by category
+  const { data: categoryProducts, isLoading: loadingCategory } =
+    useGetProductsByCategoryQuery(selectedCategory, {
+      skip: selectedCategory === 'All',
+    });
+
+  const products =
+    selectedCategory === 'All' ? allProducts?.data : categoryProducts?.data;
+
+  const isLoading = selectedCategory === 'All' ? loadingAll : loadingCategory;
+
+  if (!products) return null;
 
   return (
-    <div className="select-none mb-20 md:mb-32 ">
-      <ScrollToTop />
-      <div className="max-w-[1440px] mx-auto lg:px-16 md:px-10 px-5">
-        <Tabs>
-          <div className="sticky md:static top-0 z-10 bg-[#FAF8F2] py-4">
-            <TabList className="flex gap-5 justify-center md:justify-normal w-fit mx-auto">
-              {grouped.map(({ name }) => (
-                <Tab
-                  key={name}
-                  className="cursor-pointer px-2 md:px-4 py-1 md:py-2 border hover:bg-[#f7ecd9]
-                             data-[selected]:bg-[#B2672A] data-[selected]:text-white
-                             rounded outline-none data-[selected]:border-0 "
-                >
-                  <h1 className="md:text-2xl text-lg md:font-bold">
-                    {name.charAt(0).toUpperCase() + name.slice(1)}
-                  </h1>
-                </Tab>
-              ))}
-            </TabList>
+    <div className="select-none mb-20 md:mb-32 mt-16">
+      <div className="max-w-[1240px] mx-auto px-4 md:px-6">
+        <div className="sticky hidden md:flex justify-center md:static top-0 z-10 bg-white py-4">
+          <div className="flex gap-5 justify-center md:justify-normal w-fit mx-auto">
+            {TAB_ORDER.map((name) => (
+              <button
+                key={name}
+                onClick={() => setSelectedCategory(name)}
+                className={`cursor-pointer px-2 mx-2 md:px-4 py-1 md:py-2 border border-gray-200
+                  ${
+                    selectedCategory === name
+                      ? 'bg-[#0ab39c] text-white border-[#0ab39c]'
+                      : 'hover:bg-[#f7f7f7] text-[#495057]'
+                  }
+                  rounded-lg outline-none`}
+              >
+                <h1 className="md:text-2xl text-lg md:font-bold capitalize">
+                  {name}
+                </h1>
+              </button>
+            ))}
           </div>
-          {/* ─── tabs ─── */}
+        </div>
 
-          {/* ─── panels ─── */}
-          {grouped.map(({ name, items }) => (
-            <TabPanel key={name}>
-              <div className="mySwiper mt-10 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {items.map((prod) => (
-                  <div key={prod._id}>
-                    <ProductCard prod={prod} />
-                  </div>
-                ))}
+        {isLoading ? (
+          <div className="flex justify-center mt-40">
+            <Loader2 className="animate-spin" />
+          </div>
+        ) : (
+          <div className="mySwiper mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+            {products.map((prod) => (
+              <div key={prod._id}>
+                <ProductCard prod={prod} />
               </div>
-            </TabPanel>
-          ))}
-        </Tabs>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-/* ───────────────── single product card ───────────────── */
 const ProductCard = ({ prod }) => {
-  /* build swatch list dynamically from product fields */
-  const swatches = [
-    prod.tan?.length && {
-      name: 'tan',
-      hex: '#9D4304',
-      key: 'tan',
-    },
-    prod.chocklate?.length && {
-      name: 'chocklate',
-      hex: '#4F2D1D',
-      key: 'chocklate',
-    },
-    prod.black?.length && {
-      name: 'black',
-      hex: '#222',
-      key: 'black',
-    },
-  ].filter(Boolean);
-
-  /* colour, size, warning states */
-  const [colourName, setColourName] = useState(swatches[0]?.name || '');
-  const [size, setSize] = useState(null);
-  const [warn, setWarn] = useState('');
-
+  const swatches = prod.colors || [];
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const productKey = swatches.find((c) => c.name === colourName)?.key;
+  const [colorName, setColorName] = useState('');
+  const [showSizeChart, setShowSizeChart] = useState(null);
+  const [colorValue, setColorValue] = useState('');
+  const [size, setSize] = useState(null);
+  const [warn, setWarn] = useState('');
+  const [stockMessage, setStockMessage] = useState('');
 
-  /* check variant in cart */
-  const variantInCart = useSelector((state) =>
-    selectCartItem(state, prod._id, colourName, size)
-  );
+  // Set initial color
+  useEffect(() => {
+    if (swatches.length) {
+      setColorName(swatches[0].name);
+    }
+  }, [prod]);
 
-  /* choose image */
-  const img =
-    prod?.[productKey]?.[0]?.image ||
-    prod?.[swatches[0]?.key]?.[0]?.image ||
-    '';
+  // Clear size when color changes
+  useEffect(() => {
+    if (!colorName) return;
+    setSize(null);
+  }, [colorName]);
 
-  // console.log(img);
+  const sizeRef = useRef(null);
+  const warnRef = useRef(null);
+  const stockRef = useRef(null);
+  const sizeChartRef = useRef(null);
 
-  /* pricing */
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sizeRef.current && !sizeRef.current.contains(e.target)) {
+        setSize(null);
+      }
+
+      if (warnRef.current && !warnRef.current.contains(e.target)) {
+        setWarn(null);
+      }
+
+      if (stockRef.current && !stockRef.current.contains(e.target)) {
+        setStockMessage(null);
+      }
+
+      if (sizeChartRef.current && !sizeChartRef.current.contains(e.target)) {
+        setShowSizeChart(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const currentVariant = prod.variants.find((v) => v.color === colorName);
+  const sizesForColor = currentVariant?.sizes || [];
+  const img = currentVariant?.images?.[0] || '';
+
   const hasDiscount = prod.discount > 0;
-  const sale = hasDiscount
-    ? (prod.price * (1 - prod.discount / 100)).toFixed(0)
-    : prod.price;
-  const save = hasDiscount ? (prod.price - sale).toFixed(0) : 0;
+  const sale = hasDiscount ? prod.discount : prod.price;
 
-  /* build variant object once */
   const buildVariant = () => ({
     _id: prod._id,
     name: prod.name,
-    price: Number(sale),
-    colour: colourName,
+    price: Number(prod.price),
+    color: colorName,
+    value: colorValue,
     size,
     qty: 1,
     image: img,
   });
 
   const handleAdd = () => {
-    if (!size) return setWarn('Please choose a size');
+    setStockMessage('');
+    if (!size) {
+      return setWarn('সাইজ সিলেক্ট করুন।');
+    }
     const item = buildVariant();
 
     window.dataLayer = window.dataLayer || [];
@@ -418,13 +160,13 @@ const ProductCard = ({ prod }) => {
       ecommerce: {
         items: [
           {
-            item_id: item._id,
+            item_id: `${item._id}-${colorName}`,
             item_name: item.name,
             price: item.price,
             quantity: 1,
             item_brand: 'Soishu',
             item_category: prod.category || 'Shoes',
-            item_variant: item.colour,
+            item_variant: item.color,
             item_size: item.size,
           },
         ],
@@ -436,8 +178,9 @@ const ProductCard = ({ prod }) => {
   };
 
   const handleBuyNow = () => {
-    if (!size) return setWarn('Please choose a size');
-    const item = buildVariant(); // ✅ capture variant
+    if (!size) return setWarn('সাইজ সিলেক্ট করুন।');
+    const item = buildVariant();
+
     dispatch(setDirectPurchase(item));
 
     window.dataLayer = window.dataLayer || [];
@@ -446,13 +189,13 @@ const ProductCard = ({ prod }) => {
       ecommerce: {
         items: [
           {
-            item_id: item._id,
+            item_id: `${item._id}-${colorName}`,
             item_name: item.name,
             price: item.price,
             quantity: 1,
             item_brand: 'Soishu',
             item_category: prod.category || 'Shoes',
-            item_variant: item.colour,
+            item_variant: item.color,
             item_size: item.size,
           },
         ],
@@ -463,113 +206,156 @@ const ProductCard = ({ prod }) => {
     navigate('/checkout');
   };
 
-  const slug = `${prod.name.toLowerCase().replace(/\s+/g, '-')}`;
-
-  /* ----- UI ----- */
   return (
-    <div className="bg-[#F6F0E6] rounded-2xl p-6 flex flex-col gap-6">
-      <Link to={`/products/${slug}`}>
-        <div className="text-center  rounded-lg overflow-hidden">
+    <div className="bg-[#F7f7f7] rounded-xl md:p-6 p-4 flex flex-col relative h-auto">
+      <Link to={`/products/${prod.slug}/${colorName.toLowerCase()}`}>
+        <div className="text-center rounded-lg overflow-hidden relative h-64 sm:h-80">
           <img
             src={img}
             alt={prod.name}
-            className="aspect-square object-contain  mx-auto "
+            className="w-full h-full object-contain object-center bg-white"
           />
         </div>
+
+        {/* <div className="text-center rounded-lg overflow-hidden relative h-64 sm:h-80 md:h-full">
+          <img
+            src={img}
+            alt={prod.name}
+            className="w-full h-full object-cover object-center bg-white"
+          />
+        </div> */}
+
+        {prod.total_stock <= 0 && (
+          <p className=" text-sm font-medium bg-white border-2 border-[#B2672A] text-[#212529] px-4 rounded-[2px] py-1 text-right absolute top-10 right-10">
+            Out of Stock
+          </p>
+        )}
       </Link>
 
-      {/* title & colour picker */}
-      <div className="flex items-center justify-between">
-        <Link to={`/products/${slug}`}>
-          <h1 className="text-2xl font-semibold">{prod.name}</h1>
-        </Link>
+      {/* Title & Color Picker */}
+      <div className="flex items-center justify-between mt-6">
+        <h1 className="text-2xl font-semibold text-[#212529]">{prod.name}</h1>
+      </div>
 
-        <div className="flex gap-2">
-          {swatches.map(({ name, hex }) => (
-            <button
-              key={name}
-              onClick={() => {
-                setColourName(name);
-                setWarn('');
-              }}
-              className="relative w-5 h-5 rounded-full border-2 cursor-pointer"
-              style={{
-                backgroundColor: hex,
-                borderColor: colourName === name ? '#B2672A' : 'transparent',
-              }}
-              title={name}
+      {/* Pricing */}
+      <div className="flex items-center gap-2 mt-4">
+        <p className="text-2xl font-bold text-[#099885] flex items-center">
+          Tk.{prod.price}
+        </p>
+        {hasDiscount && (
+          <p className="text-base line-through text-gray-400 flex items-center">
+            Tk.{sale}
+          </p>
+        )}
+      </div>
+
+      {/* Colors */}
+      <div className="mt-3 flex items-center gap-6">
+        <div className="flex items-center gap-3">
+          <h1 className="text-[#212529]">কালার:</h1>
+          <div className="flex gap-2">
+            {swatches.map(({ name, value }) => (
+              <button
+                key={name}
+                onClick={() => {
+                  setColorName(name);
+                  setColorValue(value);
+                  setWarn('');
+                }}
+                className="relative w-5 h-5 rounded-full border-2 cursor-pointer"
+                style={{
+                  backgroundColor: value,
+                  borderColor: colorName === name ? '#B2672A' : 'transparent',
+                }}
+                title={name}
+              >
+                {colorName === name && (
+                  <FaCheck className="absolute inset-0 m-auto text-[8px] text-white" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="relative">
+          <button
+            onClick={() => setShowSizeChart((prev) => !prev)}
+            className="flex items-center justify-center gap-2 px-2 py-[2px] bg-[#daf4f0] border border-[#0ab39c] text-[#212529] rounded text-[10px] font-medium hover:bg-[#aae2d7] transition-colors cursor-pointer"
+          >
+            সাইজ চার্ট
+          </button>
+          {showSizeChart && (
+            <div
+              ref={sizeChartRef}
+              className="absolute z-10 -top-48 left-1/2 transform -translate-x-1/2 w-60 bg-white shadow-lg border border-gray-300 rounded-md p-3"
             >
-              {colourName === name && (
-                <FaCheck className="absolute inset-0 m-auto text-[8px] text-white" />
-              )}
-            </button>
-          ))}
+              {/* Arrow */}
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-r border-b border-gray-300 rotate-45"></div>
+              <div>
+                <img src="/size-chart.jpg" alt="" />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      <p className="text-gray-600 text-sm leading-relaxed w-[60%] -mt-4">
-        {prod.description}
-      </p>
+      {/* Size Selector */}
+      <div className="flex flex-wrap gap-2 mt-4 mb-2">
+        {sizesForColor.map(({ size: sz, stock }) => {
+          const isOutOfStock = stock <= 0;
 
-      <div className="flex items-center gap-3">
-        <p className="text-2xl font-bold text-[#B2672A]">Tk. {sale}</p>
-        {hasDiscount && (
-          <>
-            <p className="text-sm line-through text-gray-400">
-              Tk. {prod.price}
-            </p>
-            <p className="text-sm text-green-600">Save Tk. {save}</p>
-          </>
-        )}
-      </div>
-
-      {/* size picker */}
-      <div className="flex flex-wrap gap-2">
-        {SIZES.map((sz) => (
-          <button
-            key={sz}
-            onClick={() => {
-              setSize(sz);
+          const handleClick = () => {
+            if (isOutOfStock) {
               setWarn('');
-            }}
-            className={`w-10 h-10 border rounded-sm transition cursor-pointer ${
-              size === sz
-                ? 'bg-[#B2672A] text-white border-[#B2672A]'
-                : 'hover:bg-[#B2672A]/10'
-            }`}
-          >
-            {sz}
-          </button>
-        ))}
+              setStockMessage(`${sz} সাইজ ‍স্টকে নেই। `);
+            } else {
+              setSize(sz);
+              setStockMessage('');
+            }
+          };
+
+          return (
+            <button
+              key={sz}
+              onClick={handleClick}
+              className={`w-10 h-10 text-[#212529] rounded-sm transition
+          ${
+            isOutOfStock
+              ? 'opacity-50 cursor-not-allowed border border-gray-300'
+              : 'cursor-pointer'
+          }
+          ${
+            size === sz && !isOutOfStock
+              ? 'bg-[#099885] text-white'
+              : !isOutOfStock
+              ? 'hover:bg-[#e6e6e6] border-gray-400 border'
+              : ''
+          }`}
+            >
+              {sz}
+            </button>
+          );
+        })}
       </div>
 
-      {warn && <p className="text-red-600 text-xs -mb-3">{warn}</p>}
+      {stockMessage && (
+        <p className="text-xs text-[#f06548] font-medium">{stockMessage}</p>
+      )}
 
-      {/* actions */}
-      <div className="mt-auto flex flex-col sm:flex-row gap-2">
-        {variantInCart ? (
-          <>
-            <Link
-              to="/cart"
-              className="flex-1 py-2 text-center  rounded-md hover:bg-[#ece3d6] bg-[#F7F0E6] border-[0.5px] border-[#713601] text-[#713601] shadow-inner"
-            >
-              View cart
-            </Link>
-            <button
-              onClick={handleBuyNow}
-              className="flex-1 py-2  rounded-md hover:bg-[#713601]/90 cursor-pointer bg-[#713601] text-white"
-            >
-              Buy&nbsp;now
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={handleAdd}
-            className="w-full py-2 text-white rounded-md bg-[#B2672A] hover:bg-[#9E5522] "
-          >
-            Add to cart
-          </button>
-        )}
+      {/* Warning */}
+      {warn && !size && <p className="text-[#f06548] text-xs">{warn}</p>}
+
+      {/* Actions */}
+      <div className="mt-4 md:mb-0 mb-2">
+        <button
+          ref={stockRef}
+          onClick={async () => {
+            handleAdd();
+            handleBuyNow();
+          }}
+          className="w-full py-2.5 text-white rounded-md bg-[#099885] hover:bg-[#00846e] cursor-pointer"
+        >
+          অর্ডার করুন
+        </button>
       </div>
     </div>
   );

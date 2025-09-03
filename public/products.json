@@ -1,6 +1,328 @@
 [
   {
-    "_id": 100007,
+    "_id": 111,
+    "name": "Bokul Sandal",
+    "category": "Sandal",
+    "title": "Sleek in Storm, Strong in Step",
+    "description": "Where Heritage Embraces Modern Ease",
+    "price": 1750,
+    "discount": 21.71,
+    "tan": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul7.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul8.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul9.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul10.jpg"
+      },
+      {
+        "id": 5,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul11.jpg"
+      },
+      {
+        "id": 6,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul6.jpg"
+      }
+    ],
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul2.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul3.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul4.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul5.jpg"
+      },
+      {
+        "id": 5,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul1.jpg"
+      },
+      {
+        "id": 6,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/bokul6.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 112,
+    "name": "Jatraa Sandal",
+    "category": "Sandal",
+    "title": "Sleek in Storm, Strong in Step",
+    "description": "Where Style Meets Professional Comfort",
+    "price": 1750,
+    "discount": 21.71,
+    "tan": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/chayatol6.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/chayatol15.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/masterdp-11-4.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/chayatol8.jpg"
+      }
+    ],
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/chayatol1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/chayatol2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/chayatol3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/chayatol4.jpg"
+      }
+    ]
+  },
+
+  {
+    "_id": 113,
+    "name": "Cholty Sandal",
+    "title": "Relaxed Fit With Leather Grace",
+    "description": "Comfortable moccasins with breathable leather finish.",
+    "price": 1750,
+    "discount": 21.71,
+    "category": "Sandal",
+    "depend": "new",
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "/sandal/cholty/chocklate/1.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sandal/cholty/chocklate/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sandal/cholty/chocklate/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sandal/cholty/chocklate/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/sandal/cholty/chocklate/5.jpg"
+      }
+    ],
+    "tan": [
+      {
+        "id": 1,
+        "image": "/sandal/cholty/master/4.jpg"
+      },
+      {
+        "id": 2,
+        "image": "/sandal/cholty/master/2.jpg"
+      },
+      {
+        "id": 3,
+        "image": "/sandal/cholty/master/3.jpg"
+      },
+      {
+        "id": 4,
+        "image": "/sandal/cholty/master/1.jpg"
+      },
+      {
+        "id": 5,
+        "image": "/sandal/cholty/master/5.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 114,
+    "name": "Vromon Sandal",
+    "category": "Sandal",
+    "title": "Sleek in Storm, Strong in Step",
+    "description": "Style that moves with the city. Made for your everyday hustle.",
+    "price": 1750,
+    "discount": 21.71,
+    "tan": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon5.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon6.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon8.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon9.jpg"
+      },
+      {
+        "id": 5,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon7.jpg"
+      }
+    ],
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon3.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon2.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/vromon4.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 115,
+    "name": "Sohor Sandal",
+    "category": "Sandal",
+    "title": "Sleek in Storm, Strong in Step",
+    "description": "A perfect companion for office and formal events.",
+    "price": 1750,
+    "discount": 21.71,
+    "tan": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/masterdp-11-2.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/masterdp-11-3.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/masterdp-11-4.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/masterdp-11-5.jpg"
+      },
+      {
+        "id": 5,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/masterdp-11.jpg"
+      }
+    ],
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/blackdp-11.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/blackdp-12.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 116,
+    "name": "Flexon Sandal",
+    "category": "Sandal",
+    "title": "Sleek in Storm, Strong in Step",
+    "description": "Where Style Meets Professional Comfort",
+    "price": 2099,
+    "discount": 19.01,
+    "tan": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/3.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/1.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/2.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/4.jpg"
+      },
+      {
+        "id": 5,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/5.jpg"
+      }
+    ],
+    "chocklate": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/06.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/07.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/08.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/09.jpg"
+      },
+      {
+        "id": 5,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/010.jpg"
+      }
+    ],
+    "black": [
+      {
+        "id": 1,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/11.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/12.jpg"
+      },
+      {
+        "id": 3,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/13.jpg"
+      },
+      {
+        "id": 4,
+        "image": "https://brandnasu-space.nyc3.cdn.digitaloceanspaces.com/SOISHU/14.jpg"
+      }
+    ]
+  },
+  {
+    "_id": 117,
     "name": "Kadom Sandal",
     "category": "Sandal",
     "title": "Smart Footwear, Effortless Grace",
@@ -45,7 +367,7 @@
     ]
   },
   {
-    "_id": 100001,
+    "_id": 118,
     "name": "Nogor Sandal",
     "title": "Bold Look, Built for Comfort",
     "category": "Sandal",
@@ -90,62 +412,9 @@
       }
     ]
   },
+
   {
-    "_id": 100006,
-    "name": "Cholty Sandal",
-    "title": "Relaxed Fit With Leather Grace",
-    "description": "Comfortable moccasins with breathable leather finish.",
-    "price": 1750,
-    "discount": 21.71,
-    "category": "Sandal",
-    "depend": "new",
-    "chocklate": [
-      {
-        "id": 1,
-        "image": "/sandal/cholty/chocklate/1.jpg"
-      },
-      {
-        "id": 2,
-        "image": "/sandal/cholty/chocklate/2.jpg"
-      },
-      {
-        "id": 3,
-        "image": "/sandal/cholty/chocklate/3.jpg"
-      },
-      {
-        "id": 4,
-        "image": "/sandal/cholty/chocklate/4.jpg"
-      },
-      {
-        "id": 5,
-        "image": "/sandal/cholty/chocklate/5.jpg"
-      }
-    ],
-    "tan": [
-      {
-        "id": 1,
-        "image": "/sandal/cholty/master/1.jpg"
-      },
-      {
-        "id": 2,
-        "image": "/sandal/cholty/master/2.jpg"
-      },
-      {
-        "id": 3,
-        "image": "/sandal/cholty/master/3.jpg"
-      },
-      {
-        "id": 4,
-        "image": "/sandal/cholty/master/4.jpg"
-      },
-      {
-        "id": 5,
-        "image": "/sandal/cholty/master/5.jpg"
-      }
-    ]
-  },
-  {
-    "_id": 1000021,
+    "_id": 119,
     "name": "Choron Casual",
     "title": " Choron – Step Bold",
     "description": " Walk with confidence, wherever you go.",
@@ -201,7 +470,7 @@
   },
 
   {
-    "_id": 100002,
+    "_id": 120,
     "name": "Poth Shoes",
     "title": " Poth – Made to Mov",
     "description": "Easy on your feet. Effortless in style.",
@@ -255,59 +524,9 @@
       }
     ]
   },
-  {
-    "_id": 100003,
-    "name": "Bokul Shoes",
-    "title": "Bokul – Light on Feet",
-    "description": "Easy on your feet. Effortless in style.",
-    "price": 4299,
-    "discount": 26.72,
 
-    "category": "Casual",
-    "depend": "new",
-    "chocklate": [
-      {
-        "id": 1,
-        "image": "/shoes/bokul/chocklate/1.jpg"
-      },
-      {
-        "id": 2,
-        "image": "/shoes/bokul/chocklate/2.jpg"
-      },
-      {
-        "id": 3,
-        "image": "/shoes/bokul/chocklate/3.jpg"
-      },
-      {
-        "id": 4,
-        "image": "/shoes/bokul/chocklate/4.jpg"
-      },
-      {
-        "id": 5,
-        "image": "/shoes/bokul/chocklate/5.jpg"
-      }
-    ],
-    "tan": [
-      {
-        "id": 1,
-        "image": "/shoes/bokul/master/1.jpg"
-      },
-      {
-        "id": 2,
-        "image": "/shoes/bokul/master/2.jpg"
-      },
-      {
-        "id": 3,
-        "image": "/shoes/bokul/master/3.jpg"
-      },
-      {
-        "id": 4,
-        "image": "/shoes/bokul/master/4.jpg"
-      }
-    ]
-  },
   {
-    "_id": 100004,
+    "_id": 122,
     "name": "Trevo Sacchi",
     "title": "TREVO – Move Free",
     "description": "Light, clean, and made to roam.",
@@ -353,7 +572,7 @@
     ]
   },
   {
-    "_id": 100005,
+    "_id": 123,
     "name": "Wolvo Sacchi",
     "title": "WOLVO – Power in Every Step",
     "description": " Rugged comfort, built for the bold.",
@@ -391,7 +610,7 @@
     ]
   },
   {
-    "_id": 100011,
+    "_id": 124,
     "name": "Zakta Sacchi",
     "title": "ZAKTA – Style in Motion",
     "description": " Smart looks. Smooth walks.",

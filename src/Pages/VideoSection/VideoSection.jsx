@@ -34,7 +34,7 @@ export const VideoSection = () => {
         }
       },
       {
-        threshold: 0.5, // Trigger when 50% visible
+        threshold: 0.5,
       }
     );
 
@@ -49,18 +49,19 @@ export const VideoSection = () => {
         .catch((error) => console.error('Vimeo unload error:', error));
     };
   }, []);
+
   return (
-    <div className="bg-[#FAF8F2]">
+    <div className="bg-[#f7f7f7]">
       <ScrollToTop />
       <section
         ref={sectionRef}
-        className="py-16 max-w-[1440px] w-full mx-auto lg:px-16 md:px-10 px-5"
+        className="md:py-20 py-10 max-w-[1440px] w-full mx-auto px-4 md:px-6"
       >
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-center mb-3 md:mb-4 text-[#2f3133]">
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-semibold text-center mb-3 md:mb-4 text-[#495057]">
           Why we are different?
         </h2>
 
-        <p className="text-gray-600 text-sm md:text-base leading-relaxed max-w-5xl mx-auto text-center mb-10">
+        <p className="text-[#878a99] text-sm md:text-base leading-relaxed max-w-5xl mx-auto text-center mb-10">
           At <span>soishu</span>, every pair of leather shoes is crafted with
           passion, precision, and premium materials. We blend timeless tradition
           with modern style to deliver unmatched comfort and durability — shoes
@@ -68,7 +69,7 @@ export const VideoSection = () => {
         </p>
 
         {/* responsive 16:9 wrapper */}
-        <div className="relative w-full max-w-6xl mx-auto overflow-hidden md:rounded-lg shadow-lg">
+        <div className="relative w-full mx-auto overflow-hidden md:rounded-lg shadow-lg">
           <div className="pt-[56.25%]" />
           <iframe
             ref={iframeRef}
@@ -81,14 +82,14 @@ export const VideoSection = () => {
           />
         </div>
 
-        <div className="mt-20 flex flex-wrap justify-center gap-5 text-white">
+        <div className="md:mt-32 mt-20 mb-10 flex flex-wrap justify-center gap-6 text-white">
           {[image1, image2, image3, image4, image5].map((img, i) => (
             <div
               key={i}
-              className="rounded-2xl h-52 bg-[#B2672A] text-center flex flex-col justify-center items-center p-3 lg:max-w-sm md:max-w-xs w-full"
+              className="rounded-2xl h-52 bg-[#daf4f0] text-[#212529] text-center flex flex-col justify-center items-center p-3 lg:max-w-md md:max-w-sm w-full"
             >
-              <img src={img} className="h-14 w-14 mx-auto mb-2" alt="" />
-              <h1 className="text-2xl font-semibold">
+              <img src={img} className="h-14 w-14 mx-auto mb-4" alt="" />
+              <h1 className="text-2xl font-semibold text-[#212529]">
                 {
                   [
                     'Handcrafted Quality',
@@ -99,7 +100,7 @@ export const VideoSection = () => {
                   ][i]
                 }
               </h1>
-              <h1 className="text-sm mt-1.5">
+              <h1 className="text-sm mt-1.5 text-[#212529]">
                 {
                   [
                     'Premium leather. Expert finish. Each pair is made to last.',

@@ -64,33 +64,33 @@ export const FaqSection = () => {
 
   return (
     <div>
-      <div className="max-w-[1440px] mx-auto lg:px-16 md:px-10 px-5 my-16">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-6 md:py-28 py-16">
         <ScrollToTop />
-        <div className="flex justify-center items-center flex-col mb-16">
-          <p className="uppercase bg-[#ecdbcd] text-[#b26729] w-fit text-center px-2.5 py-0.5 text-sm rounded-full mb-3 md:mb-6">
+        <div className="flex justify-center items-center flex-col">
+          <p className="uppercase bg-[#fef4e4] text-[#212529] w-fit text-center px-2.5 py-0.5 text-sm rounded-full mb-3 md:mb-6">
             Frequently ask questions
           </p>
-          <h1 className="lg:text-5xl text-4xl font-semibold text-center">
+          <h1 className="lg:text-5xl text-3xl font-semibold text-center text-[#495057]">
             You ask? We answer
           </h1>
         </div>
-        <div className="w-full mx-auto space-y-3">
+        <div className="w-full mx-auto space-y-3 md:mt-16 mt-8">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="border-b border-[#ecdbcd] pb-3 cursor-pointer"
+              className="border-b border-gray-200 pb-3 cursor-pointer"
             >
               <div
                 className="flex justify-between items-center gap-8 py-3"
                 onClick={() => toggleFAQ(index)}
               >
-                <p className="w-full text-[#2f3133] text-left font-medium lg:text-xl text-lg text-darkIndigo">
+                <p className="w-full text-[#495057] text-left font-medium lg:text-xl text-darkIndigo">
                   {faq.question}
                 </p>
                 {openIndex === index ? (
-                  <AiOutlineMinus className="w-5 h-5 text-[#2f3133]" />
+                  <AiOutlineMinus className="w-5 h-5 text-[#495057]" />
                 ) : (
-                  <AiOutlinePlus className="w-5 h-5 text-[#2f3133]" />
+                  <AiOutlinePlus className="w-5 h-5 text-[#495057]" />
                 )}
               </div>
               <div
@@ -100,7 +100,9 @@ export const FaqSection = () => {
                     : 'max-h-0 opacity-0'
                 }`}
               >
-                <p className="text-gray-600">{faq.answer}</p>
+                <p className="text-[#878a99] md:text-base text-[15px] font-light">
+                  {faq.answer}
+                </p>
               </div>
             </div>
           ))}

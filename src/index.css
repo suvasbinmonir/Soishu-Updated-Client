@@ -13,7 +13,37 @@ body {
 .react-tabs__tab--selected {
   background-color: #b2672a !important;
   color: white !important ;
-  /* border-bottom: 2px rgb(173, 41, 41) solid !important; */
   border-radius: 4px !important;
   border: 0px;
 }
+
+.no-arrows::-webkit-outer-spin-button,
+.no-arrows::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-arrows {
+  -moz-appearance: textfield;
+}
+
+.recharts-wrapper rect:focus {
+  outline: none;
+  stroke: none;
+}
+
+.recharts-wrapper *:focus {
+  outline: none;
+  stroke: none;
+}
+
+/* select {
+  appearance: none;
+  background: white;
+  border: 1px solid #d1d5db;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  border-radius: 6px;
+  cursor: pointer;
+} */

@@ -6,14 +6,30 @@ import { router } from './Routes/Router.jsx';
 import { Provider } from 'react-redux';
 import { store } from './store.js';
 import { GTM } from './gtm/GTM.jsx';
+import AuthProvider from './firebase/AuthProvider.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 createRoot(document.getElementById('root')).render(
-  // <StrictMode>
   <Provider store={store}>
-    <GTM />{' '}
-    <div className="bg-[#faf8f2]">
-      <RouterProvider router={router} />
-    </div>
+    <ToastContainer
+      position="bottom-right"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+    />
+    <AuthProvider>
+      <GTM />{' '}
+      <div className="bg-white">
+        <RouterProvider router={router} />
+      </div>
+    </AuthProvider>
   </Provider>
-  // </StrictMode>
 );
