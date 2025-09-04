@@ -1276,14 +1276,6 @@ const OrderTable = () => {
           <table className="w-full text-sm text-left text-[#495057] border-t border-gray-300">
             <thead className="text-xs uppercase bg-[#fbfbfb] text-[#495057] sticky top-0 z-10">
               <tr className="border-b border-gray-300">
-                {/* <th className="pl-4 pr-1 py-3">
-                  <input
-                    className="h-4 w-4 cursor-pointer appearance-none border border-gray-300 rounded bg-white checked:bg-[#099885] checked:border-[#099885] checked:before:content-['✔'] checked:before:text-white checked:text-xs checked:before:flex checked:before:items-center checked:before:justify-center"
-                    type="checkbox"
-                    checked={selectedProducts.length === products.length}
-                    onChange={() => handleSelectAll()}
-                  />
-                </th> */}
                 <th className="px-3 py-5">SL#</th>
                 <th className="px-3 py-5">
                   <HeaderDropdown
