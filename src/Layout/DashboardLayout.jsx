@@ -536,7 +536,7 @@ const Sidebar = ({
     <aside
       className={`fixed top-0 left-0 z-40 h-screen bg-[#f7f7f7]  -all  -300 ease-in-out
         ${isHidden ? '-translate-x-full' : 'translate-x-0'}
-        ${isCollapsed ? 'md:w-20 w-0' : 'w-60'} sm:translate-x-0`}
+        ${isCollapsed ? 'md:w-16 w-0' : 'w-52'} sm:translate-x-0`}
     >
       <div className="flex flex-col items-center h-full w-full">
         {/* Logo + Toggle Button */}
@@ -596,8 +596,8 @@ const Sidebar = ({
           </ul>
         </nav>
 
-        <div className='-mb-1 w-fit mx-auto'>
-          <img src={user.image} alt="Profile"  className='rounded-full size-9'/>
+        <div className="-mb-1 w-fit mx-auto">
+          <img src={user.image} alt="Profile" className="rounded-full size-9" />
         </div>
 
         {/* Logout button */}
@@ -859,7 +859,7 @@ export default function DashboardLayout() {
   }
 
   return (
-    <div className="flex h-screen bg-[#F6F0E6]">
+    <div className="flex h-screen max-w-[1920px] mx-auto w-full">
       <div className="hidden md:block">
         <Sidebar
           sidebarState={sidebarState}
@@ -871,7 +871,7 @@ export default function DashboardLayout() {
 
       <div
         className={`flex-1 flex flex-col overflow-hidden  -all  -300
-          ${sidebarState === 'collapsed' ? 'md:ml-20' : 'md:ml-60'}`}
+          ${sidebarState === 'collapsed' ? 'md:ml-16' : 'md:ml-52'}`}
       >
         {/* <Header
           toggleSidebar={toggleSidebar}

@@ -65,7 +65,7 @@ const HeaderDropdown = ({
     <div ref={dropdownRef} className="relative select-none z-20">
       <div
         onClick={handleClick}
-        className="flex items-center lg:justify-normal md:justify-between gap-2 cursor-pointer text-xs uppercase"
+        className="flex items-center lg:justify-normal md:justify-between gap-0.5 cursor-pointer text-xs uppercase"
       >
         <span>{label}</span>
         <ChevronDown
@@ -286,17 +286,8 @@ const formatDate = (dateString) => {
   if (!dateString) return 'N/A';
   const dateObj = new Date(dateString);
 
-  const datePart = dateObj.toLocaleDateString('en-US', {
-    year: '2-digit',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  const timePart = dateObj.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  });
+  const datePart = format(dateObj, 'd MMM yy');
+  const timePart = format(dateObj, 'hh:mm a');
 
   return { datePart, timePart };
 };
@@ -982,7 +973,7 @@ const OrderTable = () => {
   }, {});
 
   return (
-    <div className="p-4 pb-0 md:p-6 md:pb-0 bg-[#fbfbfb] md:bg-none relative">
+    <div className="p-4 pb-0 md:pb-0 bg-[#fbfbfb] md:bg-none relative">
       {/* Mobile Search and Add Order Section */}
       <div className="block lg:hidden">
         <div className="flex items-center gap-3 justify-between mb-4">
@@ -1163,7 +1154,7 @@ const OrderTable = () => {
 
                                 setOpen(false);
                               }}
-                              className={`flex items-start gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50 hover:cursor-pointer transition ${
+                              className={`flex items-start gap-3 px-4 py-2.5 border-b border-gray-100 hover:bg-gray-50 hover:cursor-pointer transition ${
                                 n.isAlertSeen ? 'bg-white' : 'bg-yellow-50'
                               }`}
                             >
@@ -1276,8 +1267,8 @@ const OrderTable = () => {
           <table className="w-full text-sm text-left text-[#495057] border-t border-gray-300">
             <thead className="text-xs uppercase bg-[#fbfbfb] text-[#495057] sticky top-0 z-10">
               <tr className="border-b border-gray-300">
-                <th className="px-3 py-5">SL#</th>
-                <th className="px-3 py-5">
+                <th className="px-1 py-5 text-center">SL</th>
+                <th className="px-2 py-5">
                   <HeaderDropdown
                     label="Ass."
                     options={userNames || []}
@@ -1293,10 +1284,10 @@ const OrderTable = () => {
                     dropdownRef={assignedDropdownRef}
                   />
                 </th>
-                <th className="px-3 py-5">Phone</th>
-                <th className="px-3 py-5">Name</th>
-                <th className="px-3 py-5 w-60">Address</th>
-                <th className="px-3 py-5">
+                <th className="px-2 py-5">Phone</th>
+                <th className="px-2 py-5">Name</th>
+                <th className="px-2 py-5">Address</th>
+                <th className="px-2 py-5">
                   <HeaderDropdown
                     label="Product"
                     options={summaryData?.data?.uniqueNames || []}
@@ -1312,7 +1303,7 @@ const OrderTable = () => {
                     dropdownRef={productDropdownRef}
                   />
                 </th>
-                <th className="px-3 py-5">
+                <th className="px-2 py-5">
                   <HeaderDropdown
                     label="Color"
                     options={summaryData?.data?.uniqueColors || []}
@@ -1328,7 +1319,7 @@ const OrderTable = () => {
                     dropdownRef={colorDropdownRef}
                   />
                 </th>
-                <th className="px-3 py-5">
+                <th className="px-2 py-5">
                   <HeaderDropdown
                     label="Size"
                     options={summaryData?.data?.uniqueSizes || []}
@@ -1344,10 +1335,10 @@ const OrderTable = () => {
                     dropdownRef={sizeDropdownRef}
                   />
                 </th>
-                <th className="px-3 py-5">Qty</th>
-                <th className="px-3 py-5">DC</th>
-                <th className="px-3 py-5">Price</th>
-                <th className="px-3 py-5">
+                <th className="px-1.5 py-5">Qty</th>
+                <th className="px-0.5 py-5">DC</th>
+                <th className="px-2 py-5">Price</th>
+                <th className="px-1 py-5">
                   <HeaderDropdown
                     label="Via"
                     options={['Whatsapp', 'Facebook', 'Website']}
@@ -1363,7 +1354,7 @@ const OrderTable = () => {
                     dropdownRef={viaDropdownRef}
                   />
                 </th>
-                <th className="px-3 py-5">
+                <th className="px-2 py-5">
                   <HeaderDropdown
                     label="O. Status"
                     options={['Queued', 'Confirmed', 'Packed', 'Fake', 'Self']}
@@ -1379,12 +1370,11 @@ const OrderTable = () => {
                     dropdownRef={oStatusDropdownRef}
                   />
                 </th>
-                <th className="px-1.5 py-5">Star</th>
                 <th className="px-1.5 py-5">Fraud</th>
-                <th className="px-3 py-5">Note</th>
-                <th className="px-3 py-5">CN ID</th>
-                <th className="px-3 py-5">Tracking</th>
-                <th className="px-3 py-5">
+                <th className="px-2 py-5">Note</th>
+                <th className="px-2 py-5">CN ID</th>
+                <th className="px-2 py-5">Tracking</th>
+                <th className="px-2 py-5">
                   <HeaderDropdown
                     label="Status"
                     options={[
@@ -1409,7 +1399,7 @@ const OrderTable = () => {
                   />
                 </th>
                 <th className="px-2 py-5">D&T</th>
-                <th className="px-2 py-5">Action</th>
+                <th className="px-1.5 py-5">Action</th>
               </tr>
             </thead>
             <tbody className="text-[#495057]">
@@ -1422,38 +1412,53 @@ const OrderTable = () => {
                       index % 2 === 0 ? 'bg-white' : 'bg-[#fbfbfb]'
                     }`}
                   >
-                    {/* <td className="pl-4 pr-1 py-3">
-                      <input
-                        className="h-4 w-4 cursor-pointer appearance-none border border-gray-300 rounded bg-white checked:bg-[#099885] checked:border-[#099885] checked:before:content-['✔'] checked:before:text-white checked:text-xs checked:before:flex checked:before:items-center checked:before:justify-center"
-                        type="checkbox"
-                        checked={selectedProducts.includes(product._id)}
-                        onChange={() => handleSelect(product._id)}
-                      />
-                    </td> */}
-
-                    <td className="px-3 py-3 text-center">
+                    {/* Serial */}
+                    <td className="px-1 py-2.5 flex items-center justify-center gap-0.5 mt-0.5">
+                      {/* Star */}
+                      <div
+                        onClick={() =>
+                          handleCheck(product._id, product.isCheck)
+                        }
+                        className="px-1.5 py-2.5 cursor-pointer"
+                      >
+                        {product.isCheck ? (
+                          <Star
+                            size={16}
+                            fill="#FFC107"
+                            color="#FFC107"
+                            className="text-center w-full"
+                          />
+                        ) : (
+                          <Star
+                            size={16}
+                            fill="none"
+                            color="#A0A0A0"
+                            className="text-center w-full"
+                          />
+                        )}
+                      </div>
                       {(getDisplayTotal() ?? 0) -
                         (filters.page - 1) * filters.limit -
                         index}
                     </td>
 
                     {/* Assigned user */}
-                    <td
-                      title={product.userName}
-                      className="px-3 py-3 text-center"
-                    >
-                      {product.userPhoto && (
-                        <img
-                          src={product.userPhoto}
-                          alt="Assigned User"
-                          className="size-6 rounded-full cursor-pointer"
-                        />
-                      )}
+                    <td title={product.userName} className="px-0.5 py-2.5">
+                      <div className="flex items-center justify-center">
+                        {product.userPhoto && (
+                          <img
+                            src={product.userPhoto}
+                            alt="Assigned User"
+                            className="size-6 rounded-full cursor-pointer"
+                          />
+                        )}
+                      </div>
                     </td>
 
+                    {/* Recipient number */}
                     <td
                       key="recipient_phone"
-                      className={`px-4 py-3 w-fit cursor-pointer ${
+                      className={`px-2 py-2.5 w-fit cursor-pointer ${
                         phoneCounts[product.recipient_phone] > 1
                           ? 'text-[#f06548]'
                           : ''
@@ -1572,6 +1577,7 @@ const OrderTable = () => {
                       </div>
                     </td>
 
+                    {/* All editable filed */}
                     {[
                       {
                         field: 'recipient_name',
@@ -1608,7 +1614,7 @@ const OrderTable = () => {
                     ].map(({ field, value }) => (
                       <td
                         key={field}
-                        className={`px-4 py-3 w-fit cursor-pointer ${
+                        className={`px-2 py-2.5 w-fit cursor-pointer ${
                           field === 'delivery_charge' &&
                           product.delivery_charge > 0
                             ? 'bg-[#FEF4E4] text-[#212529]'
@@ -1648,7 +1654,8 @@ const OrderTable = () => {
                       </td>
                     ))}
 
-                    <td className="px-3 py-3">
+                    {/* Via (WhatsApp/Facebook) */}
+                    <td className="px-1 py-2.5">
                       <p className="flex items-center gap-1">
                         <span>
                           {product.via === 'WhatsApp' ? (
@@ -1662,7 +1669,7 @@ const OrderTable = () => {
                     </td>
 
                     {/* Official Status + Update Button */}
-                    <td className="px-3 py-3">
+                    <td className="px-2 py-2.5">
                       <div className="flex items-center justify-center">
                         {editCell.rowId === product._id ? (
                           <button
@@ -1689,29 +1696,8 @@ const OrderTable = () => {
                       </div>
                     </td>
 
-                    {/* Star */}
-                    <td
-                      onClick={() => handleCheck(product._id, product.isCheck)}
-                      className="px-1.5 py-3 cursor-pointer"
-                    >
-                      {product.isCheck ? (
-                        <Star
-                          size={16}
-                          fill="#FFC107"
-                          color="#FFC107"
-                          className="text-center w-full"
-                        />
-                      ) : (
-                        <Star
-                          size={16}
-                          fill="none"
-                          color="#A0A0A0"
-                          className="text-center w-full"
-                        />
-                      )}
-                    </td>
-
-                    <td className="px-2 py-3">
+                    {/* Fraud list */}
+                    <td className="px-2 py-2.5">
                       {product.total_delivered} / {product.total_cancel}
                     </td>
 
@@ -1726,7 +1712,7 @@ const OrderTable = () => {
 
                     {/* Consignment ID */}
                     <td
-                      className={`relative group px-3 py-3 cursor-pointer ${
+                      className={`relative group px-2 py-2.5 cursor-pointer ${
                         copiedCell.rowId === product._id &&
                         copiedCell.field === 'consignment'
                           ? 'text-[#0ab39c]'
@@ -1758,7 +1744,7 @@ const OrderTable = () => {
 
                     {/* Tracking Code */}
                     <td
-                      className={`px-3 py-3 cursor-pointer text-[#0ab39c] underline ${
+                      className={`px-2 py-2.5 cursor-pointer text-[#0ab39c] underline ${
                         copiedCell.rowId === product._id &&
                         copiedCell.field === 'tracking'
                           ? 'bg-green-100'
@@ -1779,7 +1765,7 @@ const OrderTable = () => {
                     </td>
 
                     {/* Status and Add Parcel */}
-                    <td className="px-3 py-3 mx-auto">
+                    <td className="px-2 py-2.5 mx-auto">
                       {loadingRowId === product._id ? (
                         <Loader2 className="w-4 h-4 animate-spin mx-auto text-[#0ab39c]" />
                       ) : product.status ? (
@@ -1804,22 +1790,24 @@ const OrderTable = () => {
                       )}
                     </td>
 
-                    <td className="pl-2 py-3 text-[10px] justify-center items-center">
+                    {/* Date & Time */}
+                    <td className="pl-2 py-2.5 text-[10px] justify-center items-center">
                       <p className="flex flex-col text-right">
                         <span className="text-nowrap">{datePart}</span>
                         <span className="text-nowrap">{timePart}</span>
+                        {/* {format(new Date(product.createdAt), 'MMM d, h:mm a')} */}
                       </p>
                     </td>
 
                     {/* Actions */}
-                    <td className="px-2 py-3">
+                    <td className="px-1.5 py-2.5">
                       <div
                         ref={
                           actionMenuOpenTwo === product._id
                             ? actionMenuRefTwo
                             : null
                         }
-                        className="px-4 py-3 relative"
+                        className="px-3 py-2.5 relative"
                       >
                         <button
                           onClick={() =>
@@ -1988,7 +1976,7 @@ const OrderTable = () => {
         return (
           <div
             key={product._id}
-            className="bg-white py-3 px-4 rounded-lg text-sm mt-3 shadow lg:hidden"
+            className="bg-white py-2.5 px-4 rounded-lg text-sm mt-3 shadow lg:hidden"
           >
             <div className="flex justify-between items-start gap-4">
               {/* Left Div: Consignment, Name, Phone */}
@@ -2364,7 +2352,7 @@ const ProductNoteCell = ({ productId, notes = [], refetch }) => {
   }, []);
 
   return (
-    <td className="md:px-3 md:py-3 relative">
+    <td className="md:px-2 md:py-2.5 relative">
       <button
         onClick={() => setShowNoteBox((prev) => !prev)}
         className="cursor-pointer"
@@ -2463,7 +2451,7 @@ const ProductNoteCell = ({ productId, notes = [], refetch }) => {
               {notes.map((note) => (
                 <div
                   key={note._id}
-                  className="p-3 border border-gray-300 rounded-lg shadow-sm bg-slate-50"
+                  className="p-3 border border-gray-300 rounded-lg bg-gray-50"
                 >
                   <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center gap-2">
