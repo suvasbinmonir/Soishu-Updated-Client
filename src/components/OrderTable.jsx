@@ -260,7 +260,7 @@ const StatusDropdown = ({
       {isOpen === dropdownKey && (
         <ul
           ref={dropdownRef}
-          className="absolute top-full left-0 mt-2 w-24 bg-white border border-gray-200 rounded-lg overflow-auto py-1"
+          className="absolute top-full left-0 mt-0.5 w-24 bg-white border border-gray-200 rounded-lg overflow-auto py-1"
           style={{ zIndex: 9999 }}
         >
           {Object.keys(statusStyles)
@@ -354,17 +354,7 @@ const OrderTable = () => {
   const totalPacked = data?.totalPacked || 0;
   const totalSelf = data?.totalSelf || 0;
 
-  const excludedStatuses = ['Fake'];
-
-  // Filter out Fake only when no official_status filter is applied
   let products = data?.data || [];
-  if (!filters.official_status) {
-    products = products.filter(
-      (p) => !excludedStatuses.includes(p.official_status)
-    );
-  }
-
-  // Normalize filter for comparison to handle case-insensitive status filters
   const normalizedStatus = filters.official_status?.toLowerCase() || '';
 
   const getDisplayTotal = () => {
@@ -599,6 +589,18 @@ const OrderTable = () => {
 
   const handleUpdate = async () => {
     if (!editCell.rowId || !editCell.field) return;
+
+    // Basic validation for phone number field
+    if (
+      editCell.field === 'alternative_phone' ||
+      editCell.field === 'recipient_phone'
+    ) {
+      const phonePattern = /^(013|014|015|016|017|018|019)\d{8}$/;
+      if (!phonePattern.test(editValue)) {
+        toast.error('Invalid phone number format. Use +8801XXXXXXXXX');
+        return;
+      }
+    }
 
     try {
       await updatePurchaseProduct({
@@ -923,7 +925,7 @@ const OrderTable = () => {
         data: { isCheck: !currentValue },
       }).unwrap();
       refetch();
-      toast.success('Successfully marked star.');
+      // toast.success('Successfully marked star.');
     } catch {
       toast.error('Failed to mark star.');
     }
@@ -1109,7 +1111,7 @@ const OrderTable = () => {
 
               {/* Notifications Dropdown */}
               {open && (
-                <div className="absolute right-0 mt-2 w-96 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
+                <div className="absolute right-0 mt-0.5 w-96 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
                   <div className="p-3 border-b border-gray-100 font-semibold">
                     Notifications
                   </div>
@@ -1286,7 +1288,7 @@ const OrderTable = () => {
                 </th>
                 <th className="px-2 py-5">Phone</th>
                 <th className="px-2 py-5">Name</th>
-                <th className="px-2 py-5">Address</th>
+                <th className="px-2 py-5 w-52">Address</th>
                 <th className="px-2 py-5">
                   <HeaderDropdown
                     label="Product"
@@ -1470,7 +1472,7 @@ const OrderTable = () => {
                         editCell.field === 'recipient_phone' ? (
                           <input
                             ref={editCellWrapperRef}
-                            type="text"
+                            type="tel"
                             className="border border-gray-200 px-1 py-0.5 rounded outline-none w-28"
                             value={editValue}
                             onChange={(e) => setEditValue(e.target.value)}
@@ -1480,6 +1482,7 @@ const OrderTable = () => {
                                 setEditCell({ rowId: null, field: null });
                             }}
                             onClick={(e) => e.stopPropagation()}
+                            maxLength={11}
                             autoFocus
                           />
                         ) : (
@@ -1516,7 +1519,11 @@ const OrderTable = () => {
                           editCell.field === 'alternative_phone'
                         ) && (
                           <button
-                            className="text-[#0ab39c] hover:text-[#09977a]"
+                            className={`text-[#0ab39c] hover:text-[#09977a] ${
+                              product.alternative_phone
+                                ? 'opacity-0'
+                                : 'opacity-100'
+                            }`}
                             onClick={() => {
                               setEditCell({
                                 rowId: product._id,
@@ -1536,7 +1543,7 @@ const OrderTable = () => {
                         editCell.field === 'alternative_phone' ? (
                           <input
                             ref={editCellWrapperRef}
-                            type="text"
+                            type="tel"
                             className="border border-gray-200 px-1 py-0.5 rounded outline-none w-28"
                             value={editValue}
                             onChange={(e) => setEditValue(e.target.value)}
@@ -1545,6 +1552,7 @@ const OrderTable = () => {
                               if (e.key === 'Escape')
                                 setEditCell({ rowId: null, field: null });
                             }}
+                            maxLength={11}
                             autoFocus
                           />
                         ) : product.alternative_phone ? (
@@ -1615,6 +1623,8 @@ const OrderTable = () => {
                       <td
                         key={field}
                         className={`px-2 py-2.5 w-fit cursor-pointer ${
+                          field === 'product_color' && 'capitalize'
+                        } ${
                           field === 'delivery_charge' &&
                           product.delivery_charge > 0
                             ? 'bg-[#FEF4E4] text-[#212529]'
@@ -1676,7 +1686,7 @@ const OrderTable = () => {
                             ref={editCellUpdateBtnRef}
                             onClick={handleUpdate}
                             data-action="update"
-                            className="cursor-pointer text-[#0ab39c] bg-green-100 border border-[#0ab39c] px-3 py-1.5 w-28 rounded-md text-center flex items-center justify-center text-sm"
+                            className="cursor-pointer text-white bg-[#0ab39c] border border-[#0ab39c] px-2.5 py-1.5 w-24 rounded-md text-center flex items-center justify-center text-sm"
                           >
                             Update
                           </button>
@@ -2241,6 +2251,13 @@ const parseAlertedTime = (text) => {
   return { description, alertedAt };
 };
 
+const noteColors = [
+  'bg-[#daf4f080] border-[#9de1d780]',
+  'bg-[#fef4e480] border-[#fce3b780]',
+  'bg-[#dff0fa80] border-[#a9d7f180]',
+  'bg-[#fde8e480] border-[#f9c1b680]',
+];
+
 const ProductNoteCell = ({ productId, notes = [], refetch }) => {
   const [showNoteBox, setShowNoteBox] = useState(false);
   const [editableNote, setEditableNote] = useState(null);
@@ -2448,44 +2465,47 @@ const ProductNoteCell = ({ productId, notes = [], refetch }) => {
 
           {!isEditing && notes.length > 0 && (
             <div className="space-y-3">
-              {notes.map((note) => (
-                <div
-                  key={note._id}
-                  className="p-3 border border-gray-300 rounded-lg bg-gray-50"
-                >
-                  <div className="flex justify-between items-center mb-2">
-                    <div className="flex items-center gap-2">
-                      {note.notedUserPhoto && (
-                        <img
-                          src={note.notedUserPhoto}
-                          className="size-6 rounded-full"
-                          alt="User Photo"
-                        />
-                      )}
-                      <span className="text-sm font-semibold">
-                        {note.notedUserName}
-                      </span>
+              {notes.map((note, index) => {
+                const colorClass = noteColors[index % noteColors.length];
+                return (
+                  <div
+                    key={note._id}
+                    className={`p-3 border rounded-lg ${colorClass}`}
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="flex items-center gap-2">
+                        {note.notedUserPhoto && (
+                          <img
+                            src={note.notedUserPhoto}
+                            className="size-6 rounded-full"
+                            alt="User Photo"
+                          />
+                        )}
+                        <span className="text-sm font-semibold">
+                          {note.notedUserName}
+                        </span>
+                      </div>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleEditNote(note)}>
+                          <Pencil className="w-4 h-4 cursor-pointer text-gray-500 hover:text-[#0ab39c]" />
+                        </button>
+                        <button onClick={() => handleDeleteNote(note._id)}>
+                          <Trash2 className="w-4 h-4 cursor-pointer text-gray-500 hover:text-[#f06548]" />
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <button onClick={() => handleEditNote(note)}>
-                        <Pencil className="w-4 h-4 cursor-pointer text-gray-500 hover:text-[#0ab39c]" />
-                      </button>
-                      <button onClick={() => handleDeleteNote(note._id)}>
-                        <Trash2 className="w-4 h-4 cursor-pointer text-gray-500 hover:text-[#f06548]" />
-                      </button>
-                    </div>
+                    <p
+                      className="text-sm text-gray-700 whitespace-pre-wrap"
+                      dangerouslySetInnerHTML={{
+                        __html: note.description,
+                      }}
+                    />
+                    <span className="text-xs text-gray-400">
+                      {format(new Date(note.createdAt), 'MMM d, h:mm a')}
+                    </span>
                   </div>
-                  <p
-                    className="text-sm text-gray-700 whitespace-pre-wrap"
-                    dangerouslySetInnerHTML={{
-                      __html: note.description,
-                    }}
-                  />
-                  <span className="text-xs text-gray-400">
-                    {format(new Date(note.createdAt), 'MMM d, h:mm a')}
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
