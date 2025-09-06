@@ -1712,7 +1712,7 @@ const OrderTable = () => {
                     </td>
 
                     <td className="px-2 py-3">
-                      {product.total_delivered} | {product.total_cancel}
+                      {product.total_delivered} / {product.total_cancel}
                     </td>
 
                     {/* Note */}
