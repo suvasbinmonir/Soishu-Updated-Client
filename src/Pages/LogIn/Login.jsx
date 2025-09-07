@@ -36,6 +36,20 @@ export const Login = () => {
     }
   };
 
+  const handleQuickLogin = async () => {
+  const quickLoginData = {
+    identifier: 'selimreza@gmail.com',
+    password: 'SeLim@123',
+  };
+  try {
+    const res = await login(quickLoginData);
+    toast.success(res?.data?.message || 'Logged in successfully');
+    navigate('/dashboard');
+  } catch (err) {
+    toast.error(err.data?.message || 'Quick login failed');
+  }
+};
+
   return (
     <div className="min-h-[95vh] bg-gray-100 p-4">
       <div className="bg-white p-4 sm:p-8 rounded-xl w-full max-w-lg mx-auto mt-44 mb-10">
@@ -80,6 +94,7 @@ export const Login = () => {
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
+          <div className="flex flex-col gap-2.5">
           <button
             type="submit"
             disabled={isLoggingIn}
@@ -87,6 +102,13 @@ export const Login = () => {
           >
             {isLoggingIn ? <Spinner /> : 'Log In'}
           </button>
+          <button
+  type="button"
+  onClick={handleQuickLogin}
+  className="w-full h-14 bg-[#ff9900] text-white cursor-pointer text-lg font-semibold rounded-lg flex items-center justify-center hover:bg-[#e68a00] mb-4"
+>
+  Quick Login
+</button></div>
 
           <div className="mt-7">
             <div className="w-full gap-3 flex justify-center items-center">
