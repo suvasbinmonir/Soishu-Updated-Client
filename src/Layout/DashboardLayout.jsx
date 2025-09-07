@@ -574,7 +574,7 @@ const Sidebar = ({
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 pb-4 mt-6 overflow-y-auto w-full px-5">
+        <nav className="flex-1 pb-4 mt-6 overflow-y-auto w-full px-3">
           <ul className="space-y-2 font-medium">
             {/* <li
               className={`text-[#878a99] px-4 ${
