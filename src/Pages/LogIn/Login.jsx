@@ -38,7 +38,7 @@ export const Login = () => {
 
   const handleQuickLogin = async () => {
   const quickLoginData = {
-    identifier: 'selimreza@gmail.com',
+    identifier: 'selimreza405@gmail.com',
     password: 'SeLim@123',
   };
   try {
