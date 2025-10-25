@@ -838,44 +838,45 @@ const OrderTable = () => {
   };
 
   // Fire pixel/event only after order is confirmed
-  const sendPurchaseEvent = (product) => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'purchase',
-      ecommerce: {
-        currency: 'BDT',
-        value:
-          Number(product.product_price || 0) +
-          Number(product.shippingCost || 0),
-        shipping: Number(product.shippingCost || 0),
-        items: [
-          {
-            item_id: `${product.productId}-${product.product_color}`,
-            item_name: product.product_name || 'N/A',
-            item_brand: 'Soishu',
-            item_category: product.category || 'N/A',
-            price: Number(product.product_price || 0),
-            quantity: Number(product.total_lot || 1),
-            item_color: product.product_color || 'N/A',
-            item_size: product.product_size || 'N/A',
-          },
-        ],
-      },
-      user_info: {
-        name: product.recipient_name,
-        phone: product.recipient_phone,
-        address: product.address,
-        shipping: Number(product.shippingCost || 0),
-      },
-    });
-  };
+  // const sendPurchaseEvent = (product) => {
+  //   window.dataLayer = window.dataLayer || [];
+  //   window.dataLayer.push({
+  //     event: 'purchase',
+  //     event_id: product._id,
+  //     ecommerce: {
+  //       currency: 'BDT',
+  //       value:
+  //         Number(product.product_price || 0) +
+  //         Number(product.shippingCost || 0),
+  //       shipping: Number(product.shippingCost || 0),
+  //       items: [
+  //         {
+  //           item_id: `${product.productId}-${product.product_color}`,
+  //           item_name: product.product_name || 'N/A',
+  //           item_brand: 'Soishu',
+  //           item_category: product.category || 'N/A',
+  //           price: Number(product.product_price || 0),
+  //           quantity: Number(product.total_lot || 1),
+  //           item_color: product.product_color || 'N/A',
+  //           item_size: product.product_size || 'N/A',
+  //         },
+  //       ],
+  //     },
+  //     user_info: {
+  //       name: product.recipient_name,
+  //       phone: product.recipient_phone,
+  //       address: product.address,
+  //       shipping: Number(product.shippingCost || 0),
+  //     },
+  //   });
+  // };
 
   const handleStatusChange = (orderId, newStatus) => {
-    const product = products.find((p) => p._id === orderId);
+    // const product = products.find((p) => p._id === orderId);
 
     if (newStatus === 'Confirmed') {
       // fire purchase event ONLY when confirmed
-      sendPurchaseEvent(product);
+      // sendPurchaseEvent(product);
       proceedStatusChange(orderId, newStatus);
     } else if (newStatus === 'Self') {
       showSelfStatusConfirmation(() =>
@@ -1707,7 +1708,7 @@ const OrderTable = () => {
                     </td>
 
                     {/* Fraud list */}
-                    <td className="px-2 py-2.5">
+                    <td className="px-2 py-2.5 pl-4">
                       {product.total_delivered} / {product.total_cancel}
                     </td>
 
@@ -1805,7 +1806,6 @@ const OrderTable = () => {
                       <p className="flex flex-col text-right">
                         <span className="text-nowrap">{datePart}</span>
                         <span className="text-nowrap">{timePart}</span>
-                        {/* {format(new Date(product.createdAt), 'MMM d, h:mm a')} */}
                       </p>
                     </td>
 
@@ -2030,6 +2030,9 @@ const OrderTable = () => {
               {/* Right Div: Price, Status, and Action Menu */}
               <div className="text-right w-1/2 space-y-1">
                 <div className="flex items-center justify-end gap-1.5">
+                  <div className="text-center pr-5">
+                    {product.total_delivered} / {product.total_cancel}
+                  </div>
                   {/* --- Status Display Logic --- */}
                   {isPlacingOrder ? (
                     <span className="text-xs text-gray-700 font-semibold animate-pulse">

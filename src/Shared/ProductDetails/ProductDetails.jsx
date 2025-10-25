@@ -400,19 +400,6 @@ const ProductDetails = () => {
               {colors?.map((color) => (
                 <button
                   key={color.name}
-                  // onClick={() => {
-                  //   setColorKey(color.name);
-                  //   setColorValue(color.name);
-
-                  //   const variant = product.variants.find(
-                  //     (v) => v.color === color.name
-                  //   );
-                  //   const firstImage = variant?.images?.[0];
-
-                  //   if (firstImage) {
-                  //     setActiveImg(firstImage);
-                  //   }
-                  // }}
                   onClick={() => handleColorChange(color.name)}
                   title={color.name}
                   className={`relative w-6 h-6 md:w-5 md:h-5 cursor-pointer rounded-full border-2 transition ${

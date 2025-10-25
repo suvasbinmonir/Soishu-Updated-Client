@@ -9,13 +9,11 @@ import {
 import ScrollToTop from '../ScrollToTop/ScrollToTop';
 import { useNavigate } from 'react-router-dom';
 import * as address from '@bangladeshi/bangladesh-address';
-import {
-  usePurchaseProductMutation,
-  useSendOrderEmailMutation,
-} from '../../api/ordersApi';
+import { usePurchaseProductMutation } from '../../api/ordersApi';
 import { toast } from 'react-toastify';
 import { X } from 'lucide-react';
 import { useCheckFraudMutation } from '../../api/fraudApi';
+import emailjs from '@emailjs/browser';
 
 const DIRECT_KEY = 'directPurchase';
 
@@ -58,7 +56,6 @@ const Checkout = () => {
 
   const [purchaseProduct] = usePurchaseProductMutation();
   const [fraudCheck] = useCheckFraudMutation();
-  const [sendOrderEmail] = useSendOrderEmailMutation();
 
   useEffect(() => {
     if (reduxDirect) {
@@ -77,35 +74,35 @@ const Checkout = () => {
   const shippingCost = shipping ? shippingRates[shipping] : 0;
   const grandTotal = total + shippingCost;
 
-  // const sendCheckoutInitiatedEvent = () => {
-  //   window.dataLayer = window.dataLayer || [];
-  //   window.dataLayer.push({
-  //     event: 'purchase',
-  //     user_info: {
-  //       fullName,
-  //       phone,
-  //       zela,
-  //       // upozila,
-  //       addressText,
-  //       shipping,
-  //     },
-  //     ecommerce: {
-  //       currency: 'BDT',
-  //       value: grandTotal,
-  //       shipping: shippingCost,
-  //       items: items.map((it) => ({
-  //         item_id: `${it._id}-${it.color}`,
-  //         item_name: it.name,
-  //         item_brand: 'Soishu',
-  //         item_category: it.title,
-  //         price: it.price,
-  //         quantity: it.qty,
-  //         item_color: it.color,
-  //         item_size: it.size,
-  //       })),
-  //     },
-  //   });
-  // };
+  const sendCheckoutInitiatedEvent = () => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'purchase',
+      user_info: {
+        fullName,
+        phone,
+        zela,
+        // upozila,
+        addressText,
+        shipping,
+      },
+      ecommerce: {
+        currency: 'BDT',
+        value: grandTotal,
+        shipping: shippingCost,
+        items: items.map((it) => ({
+          item_id: `${it._id}-${it.color}`,
+          item_name: it.name,
+          item_brand: 'Soishu',
+          item_category: it.title,
+          price: it.price,
+          quantity: it.qty,
+          item_color: it.color,
+          item_size: it.size,
+        })),
+      },
+    });
+  };
 
   const handlePhoneChange = (e) => {
     let input = e.target.value;
@@ -154,31 +151,37 @@ const Checkout = () => {
   //   setLoading(true);
   //   sendCheckoutInitiatedEvent();
 
-  //   const purchasePayload = {
-  //     recipient_name: fullName,
-  //     recipient_phone: '0' + phone,
-  //     recipient_email: '',
-  //     recipient_address: `${zela}, ${addressText}`,
-  //     note: '',
-  //     shippingCost,
-  //     items: items.map((it) => ({
-  //       productId: it._id,
-  //       product_color: it.color,
-  //       product_size: it.size,
-  //       total_lot: it.qty,
-  //     })),
-  //   };
-
   //   try {
+  //     const response = await fraudCheck(fullPhone).unwrap();
+
+  //     const purchasePayload = {
+  //       recipient_name: fullName,
+  //       recipient_phone: fullPhone,
+  //       recipient_email: '',
+  //       total_parcels: response.total_parcels || 0,
+  //       total_delivered: response.total_delivered || 0,
+  //       total_cancel: response.total_cancel || 0,
+  //       recipient_address: `${zela}, ${addressText}`,
+  //       note: '',
+  //       shippingCost,
+  //       items: items.map((it) => ({
+  //         productId: it._id,
+  //         product_color: it.color,
+  //         product_size: it.size,
+  //         total_lot: it.qty,
+  //       })),
+  //     };
+
+  //     // 1️⃣ Create order
   //     await purchaseProduct(purchasePayload).unwrap();
 
+  //     // 2️⃣ Save success data
   //     sessionStorage.setItem(
   //       'orderSuccessData',
   //       JSON.stringify({
   //         fullName,
-  //         phone: '0' + phone,
+  //         phone: fullPhone,
   //         zela,
-  //         // upozila,
   //         addressText,
   //         shippingCost,
   //         subtotal: total.toFixed(0),
@@ -187,15 +190,26 @@ const Checkout = () => {
   //       })
   //     );
 
-  //     if (directItem) {
-  //       sessionStorage.removeItem(DIRECT_KEY);
-  //       // dispatch(clearDirectPurchase());
-  //       dispatch(clearCart());
-  //     } else {
-  //       dispatch(clearCart());
-  //     }
+  //     // 3️⃣ Clear cart
+  //     dispatch(clearCart());
+  //     if (directItem) sessionStorage.removeItem(DIRECT_KEY);
 
+  //     // 4️⃣ Navigate first
   //     navigate('/order-confirmed');
+
+  //     // 5️⃣ Trigger email in background (no need to await)
+  //     sendOrderEmail({
+  //       recipient_name: fullName,
+  //       recipient_phone: fullPhone,
+  //       items: items.map((it) => ({
+  //         productId: it._id,
+  //         product_color: it.color,
+  //         product_size: it.size,
+  //         total_lot: it.qty,
+  //       })),
+  //     }).catch((err) => {
+  //       console.error('Email sending failed:', err);
+  //     });
   //   } catch {
   //     toast.error('অর্ডার সম্পন্ন হয়নি। আবার চেষ্টা করুন।');
   //   } finally {
@@ -223,7 +237,7 @@ const Checkout = () => {
     }
 
     setLoading(true);
-    // sendCheckoutInitiatedEvent();
+    sendCheckoutInitiatedEvent();
 
     try {
       const response = await fraudCheck(fullPhone).unwrap();
@@ -232,9 +246,9 @@ const Checkout = () => {
         recipient_name: fullName,
         recipient_phone: fullPhone,
         recipient_email: '',
-        total_parcels: response.total_parcels,
-        total_delivered: response.total_delivered,
-        total_cancel: response.total_cancel,
+        total_parcels: response.total_parcels || 0,
+        total_delivered: response.total_delivered || 0,
+        total_cancel: response.total_cancel || 0,
         recipient_address: `${zela}, ${addressText}`,
         note: '',
         shippingCost,
@@ -246,7 +260,7 @@ const Checkout = () => {
         })),
       };
 
-      // 1️⃣ Create order
+      // 1️⃣ Create order in your backend
       await purchaseProduct(purchasePayload).unwrap();
 
       // 2️⃣ Save success data
@@ -268,23 +282,43 @@ const Checkout = () => {
       dispatch(clearCart());
       if (directItem) sessionStorage.removeItem(DIRECT_KEY);
 
-      // 4️⃣ Navigate first
+      // 4️⃣ Navigate to confirmation page
       navigate('/order-confirmed');
 
-      // 5️⃣ Trigger email in background (no need to await)
-      sendOrderEmail({
-        recipient_name: fullName,
-        recipient_phone: fullPhone,
-        items: items.map((it) => ({
-          productId: it._id,
-          product_color: it.color,
-          product_size: it.size,
-          total_lot: it.qty,
-        })),
-      }).catch((err) => {
-        console.error('Email sending failed:', err);
-      });
-    } catch {
+      // 6️⃣ Send customer/order summary via EmailJS
+      const templateParams = {
+        user_name: fullName,
+        user_phone: fullPhone,
+        user_address: `${zela}, ${addressText}`,
+        shipping_cost: shippingCost,
+        subtotal: total.toFixed(0),
+        grand_total: grandTotal.toFixed(0),
+        product_list: items
+          .map(
+            (it) =>
+              `Name: ${it.name}, Size: ${it.size}, Color: ${it.color}, Qty: ${it.qty}`
+          )
+          .join('\n'),
+        current_year: new Date().getFullYear(),
+      };
+
+      emailjs
+        .send(
+          'service_update_soishu', // 🔹 Your EmailJS Service ID
+          'template_update_soishu', // 🔹 Your EmailJS Template ID
+          templateParams,
+          'zFrHzhXI85Qn2FHGK' // 🔹 Your EmailJS Public Key
+        )
+        .then(
+          () => {
+            console.log('✅ EmailJS message sent successfully!');
+          },
+          (error) => {
+            console.error('❌ EmailJS sending failed:', error);
+          }
+        );
+    } catch (err) {
+      console.error(err);
       toast.error('অর্ডার সম্পন্ন হয়নি। আবার চেষ্টা করুন।');
     } finally {
       setLoading(false);

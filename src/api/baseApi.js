@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    // baseUrl: 'http://localhost:5001/v1',
-    baseUrl: 'https://soishu-backend.vercel.app/v1',
-    // baseUrl: 'https://soishu.com/v1',
+    baseUrl: 'https://shoe.soishu.com/api/v1',
+    // baseUrl: 'http://192.168.0.2:5001/api/v1',
+    // baseUrl: 'http://167.172.79.21/api/v1',
     credentials: 'include',
   }),
   tagTypes: ['User', 'Product', 'Order', 'Note'],
